@@ -10,7 +10,7 @@ import ru.tinkoff.piapi.core.InvestApi;
 
 @Getter
 @Component
-@ConfigurationProperties(prefix = "api")
+@ConfigurationProperties(prefix = "io/modicon/stockservice/api")
 public class TinkoffApiConfig {
 
     @Value("${api.type}")
@@ -28,7 +28,7 @@ class TinkoffApiClientFactory {
     public InvestApi getApi(String token) {
         String apiType = tinkoffApiConfig.getApiType();
         switch (apiType) {
-            case "api" -> {
+            case "io/modicon/stockservice/api" -> {
                 log.info("create tinkoff api");
                 return InvestApi.create(token);
             }

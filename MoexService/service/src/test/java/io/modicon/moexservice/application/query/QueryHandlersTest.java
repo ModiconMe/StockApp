@@ -1,12 +1,12 @@
 package io.modicon.moexservice.application.query;
 
-import io.modicon.moexservice.api.dto.BondDto;
-import io.modicon.moexservice.api.dto.BondPriceDto;
-import io.modicon.moexservice.api.query.GetBondPrices;
-import io.modicon.moexservice.api.query.GetBonds;
+import io.modicon.moexservice.api.query.GetMoexBondPrices;
+import io.modicon.moexservice.api.query.GetMoexBonds;
 import io.modicon.moexservice.application.service.BondService;
 import io.modicon.moexservice.domain.model.Bond;
 import io.modicon.moexservice.infrastructure.exception.ApiException;
+import io.modicon.stockservice.api.dto.StockDto;
+import io.modicon.stockservice.api.dto.StockPriceDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,8 +27,8 @@ class QueryHandlersTest {
     @Mock
     BondService bondService;
 
-    GetBondPricesHandler getBondPricesHandler;
-    GetBondsHandler getBondsHandler;
+    GetMoexBondPricesHandler getBondPricesHandler;
+    GetMoexBondsHandler getBondsHandler;
 
     List<Bond> bonds;
 
@@ -41,8 +41,8 @@ class QueryHandlersTest {
 
     @BeforeEach
     void setUp() {
-        getBondPricesHandler = new GetBondPricesHandler(bondService);
-        getBondsHandler = new GetBondsHandler(bondService);
+        getBondPricesHandler = new GetMoexBondPricesHandler(bondService);
+        getBondsHandler = new GetMoexBondsHandler(bondService);
     }
 
     @Test
@@ -50,7 +50,7 @@ class QueryHandlersTest {
         when(bondService.getCorporateBonds()).thenReturn(bonds);
         when(bondService.getGovBonds()).thenReturn(bonds);
 
-        List<BondDto> result = getBondsHandler.handle(new GetBonds(List.of("AMUNIBB2DER6", "RU000A0JQ7Z2", "test"))).getBonds();
+        List<StockDto> result = getBondsHandler.handle(new GetMoexBonds(List.of("AMUNIBB2DER6", "RU000A0JQ7Z2", "test"))).getBonds();
 
         assertThat(result).isNotEmpty();
         assertThat(result.size()).isEqualTo(4);
@@ -61,7 +61,7 @@ class QueryHandlersTest {
         when(bondService.getCorporateBonds()).thenReturn(bonds);
         when(bondService.getGovBonds()).thenReturn(bonds);
 
-        List<BondDto> result = getBondsHandler.handle(new GetBonds(List.of("test"))).getBonds();
+        List<StockDto> result = getBondsHandler.handle(new GetMoexBonds(List.of("test"))).getBonds();
 
         assertThat(result).isEmpty();
     }
@@ -71,7 +71,7 @@ class QueryHandlersTest {
         when(bondService.getCorporateBonds()).thenReturn(bonds);
         when(bondService.getGovBonds()).thenReturn(bonds);
 
-        List<BondPriceDto> result = getBondPricesHandler.handle(new GetBondPrices(List.of("AMUNIBB2DER6", "RU000A0JQ7Z2"))).getBondPrices();
+        List<StockPriceDto> result = getBondPricesHandler.handle(new GetMoexBondPrices(List.of("AMUNIBB2DER6", "RU000A0JQ7Z2"))).getBondPrices();
 
         assertThat(result).isNotEmpty();
         assertThat(result.size()).isEqualTo(4);
@@ -82,7 +82,7 @@ class QueryHandlersTest {
         when(bondService.getCorporateBonds()).thenReturn(bonds);
         when(bondService.getGovBonds()).thenReturn(bonds);
 
-        assertThatThrownBy(() -> getBondPricesHandler.handle(new GetBondPrices(List.of("test"))))
+        assertThatThrownBy(() -> getBondPricesHandler.handle(new GetMoexBondPrices(List.of("test"))))
                 .isInstanceOf(ApiException.class);
     }
 }

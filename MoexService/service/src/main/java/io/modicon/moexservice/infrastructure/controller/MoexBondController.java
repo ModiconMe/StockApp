@@ -1,11 +1,11 @@
 package io.modicon.moexservice.infrastructure.controller;
 
 import io.modicon.cqrsbus.Bus;
-import io.modicon.moexservice.api.operation.MoexBondOperation;
-import io.modicon.moexservice.api.query.GetBonds;
-import io.modicon.moexservice.api.query.GetBondsResult;
-import io.modicon.moexservice.api.query.GetBondPrices;
-import io.modicon.moexservice.api.query.GetBondPricesResult;
+import io.modicon.moexservice.api.operation.MoexServiceOperation;
+import io.modicon.moexservice.api.query.GetMoexBonds;
+import io.modicon.moexservice.api.query.GetMoexBondsResult;
+import io.modicon.moexservice.api.query.GetMoexBondPrices;
+import io.modicon.moexservice.api.query.GetMoexBondPricesResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,17 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/bonds/")
-public class MoexBondController implements MoexBondOperation {
+public class MoexBondController implements MoexServiceOperation {
 
     private final Bus bus;
 
     @Override
-    public GetBondsResult getBonds(GetBonds query) {
+    public GetMoexBondsResult getBonds(GetMoexBonds query) {
         return bus.executeQuery(query);
     }
 
     @Override
-    public GetBondPricesResult getPricesByFigis(GetBondPrices query) {
+    public GetMoexBondPricesResult getPricesByFigis(GetMoexBondPrices query) {
         return bus.executeQuery(query);
     }
 }

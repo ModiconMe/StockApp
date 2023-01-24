@@ -1,0 +1,16 @@
+server:
+  port: 8002
+
+api :
+  tinkoffConfig :
+    tinkoffService: tinkoff-service
+    getStocksByTickers: /api/stocks/getStocksByTickers
+    getPrices: /api/stocks/prices
+  moexConfig:
+    moexService: moex-service
+    getStocksByTickers: /api/bonds/getBondsByTickers
+    getPrices: /api/bonds/prices
+
+springdoc:
+  api-docs:
+    path: /api-docs

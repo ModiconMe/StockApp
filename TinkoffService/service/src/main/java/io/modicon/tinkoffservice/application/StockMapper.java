@@ -1,7 +1,7 @@
 package io.modicon.tinkoffservice.application;
 
-import io.modicon.tinkoffservice.api.dto.CurrencyDto;
-import io.modicon.tinkoffservice.api.dto.StockDto;
+import io.modicon.stockservice.api.dto.CurrencyDto;
+import io.modicon.stockservice.api.dto.StockDto;
 import ru.tinkoff.piapi.contract.v1.Instrument;
 
 public class StockMapper {

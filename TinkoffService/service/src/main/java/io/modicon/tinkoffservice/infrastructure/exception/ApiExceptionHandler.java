@@ -1,6 +1,6 @@
 package io.modicon.tinkoffservice.infrastructure.exception;
 
-import io.modicon.tinkoffservice.api.dto.ApiExceptionDto;
+import io.modicon.stockservice.api.dto.ApiExceptionDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;

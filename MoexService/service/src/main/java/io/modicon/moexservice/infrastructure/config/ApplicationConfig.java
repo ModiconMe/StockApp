@@ -14,7 +14,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @RequiredArgsConstructor
 @Configuration
-@EnableAsync
 @EnableCaching
 @EnableFeignClients(basePackages = "io.modicon.moexservice.application.client")
 public class ApplicationConfig {

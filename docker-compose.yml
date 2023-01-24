@@ -1,0 +1,12 @@
+services:
+  tinkoff-service:
+    image: modiconme/tinkoff-service:latest
+    container_name: tinkoff-service
+    ports:
+      - 8004:8004
+    networks:
+      - stock-app-network
+
+networks:
+  stock-app-network:
+    driver: bridge

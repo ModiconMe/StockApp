@@ -5,7 +5,7 @@ import io.modicon.tinkoffservice.api.dto.StockDto;
 import ru.tinkoff.piapi.contract.v1.Instrument;
 
 public class StockMapper {
-    public static StockDto mapToStock(Instrument instrument) {
+    public static StockDto mapToDto(Instrument instrument) {
         return StockDto.builder()
                 .ticker(instrument.getTicker())
                 .figi(instrument.getFigi())

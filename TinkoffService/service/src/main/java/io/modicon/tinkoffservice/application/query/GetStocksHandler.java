@@ -31,7 +31,7 @@ public class GetStocksHandler implements QueryHandler<GetStocksResult, GetStocks
                 .map((cf) -> cf.handle((s, t) -> t != null ? null : s))
                 .map(CompletableFuture::join)
                 .filter((Objects::nonNull))
-                .map(StockMapper::mapToStock).toList();
+                .map(StockMapper::mapToDto).toList();
 
         return new GetStocksResult(stocks);
     }

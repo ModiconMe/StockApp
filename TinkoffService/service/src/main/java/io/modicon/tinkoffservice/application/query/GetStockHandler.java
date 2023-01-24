@@ -31,7 +31,7 @@ public class GetStockHandler implements QueryHandler<GetStockResult, GetStock> {
         if (optionalInstrument.isEmpty()) throw ApiException.exception(HttpStatus.NOT_FOUND, "stock by figi:[%s] not found", figi);
         Instrument instrument = optionalInstrument.get();
 
-        return new GetStockResult(StockMapper.mapToStock(instrument));
+        return new GetStockResult(StockMapper.mapToDto(instrument));
     }
 
 }

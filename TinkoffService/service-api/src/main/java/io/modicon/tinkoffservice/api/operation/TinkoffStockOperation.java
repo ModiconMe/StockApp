@@ -6,15 +6,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-public interface StockOperation {
+public interface TinkoffStockOperation {
 
     @GetMapping("/{figi}")
     GetStockResult getStock(@PathVariable("figi") String figi);
 
     @PostMapping
-    GetStocksResult getStocks(@RequestBody GetStocks getStocks);
+    GetStocksResult getStocks(@RequestBody GetStocks query);
 
     @PostMapping("/prices")
-    GetStockPricesResult getPrices(@RequestBody GetStockPrices getStockPrices);
+    GetStockPricesResult getPrices(@RequestBody GetStockPrices query);
 
 }

@@ -1,0 +1,16 @@
+pluginManagement {
+    plugins {
+        id 'java'
+        id 'org.springframework.boot' version "${springBootVersion}"
+        id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
+    }
+}
+
+rootProject.name = 'StockApp'
+include 'TinkoffService'
+include 'TinkoffService:service'
+include 'TinkoffService:service-api'
+findProject(':TinkoffService:service')?.name = 'service'
+findProject(':TinkoffService:service-api')?.name = 'service-api'
+include 'Bus'
+

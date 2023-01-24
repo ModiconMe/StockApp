@@ -26,7 +26,5 @@ jobs:
         with:
           arguments: build
 
-      - uses: actions/setup-node@v1
-
       - name: Push to docker hub
         run: ./build.sh modiconme ${{ secrets.DOCKER_HUB_PASSWORD }}

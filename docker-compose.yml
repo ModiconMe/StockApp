@@ -7,6 +7,14 @@ services:
     networks:
       - stock-app-network
 
+  moex-service:
+    image: modiconme/moex-service:latest
+    container_name: moex-service
+    ports:
+      - 8005:8005
+    networks:
+      - stock-app-network
+
 networks:
   stock-app-network:
     driver: bridge

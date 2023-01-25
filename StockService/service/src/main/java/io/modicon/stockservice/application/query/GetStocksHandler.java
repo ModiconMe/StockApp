@@ -1,9 +1,9 @@
 package io.modicon.stockservice.application.query;
 
-import io.modicon.stockservice.api.query.GetStocks;
-import io.modicon.stockservice.api.query.GetStocksResult;
 import io.modicon.cqrsbus.QueryHandler;
 import io.modicon.moexservice.api.query.GetMoexBonds;
+import io.modicon.stockservice.api.query.GetStocks;
+import io.modicon.stockservice.api.query.GetStocksResult;
 import io.modicon.stockservice.application.StockMapper;
 import io.modicon.stockservice.application.client.MoexServiceClient;
 import io.modicon.stockservice.application.client.TinkoffServiceClient;
@@ -11,13 +11,10 @@ import io.modicon.stockservice.model.Stock;
 import io.modicon.tinkoffservice.api.query.GetTinkoffStocks;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static io.modicon.stockservice.infrastructure.exception.ApiException.exception;
 
 @Slf4j
 @RequiredArgsConstructor

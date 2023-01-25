@@ -1,4 +1,12 @@
 services:
+  stock-service:
+    image: modiconme/stock-service:latest
+    container_name: tinkoff-service
+    ports:
+      - 8002:8002
+    networks:
+      - stock-app-network
+
   tinkoff-service:
     image: modiconme/tinkoff-service:latest
     container_name: tinkoff-service

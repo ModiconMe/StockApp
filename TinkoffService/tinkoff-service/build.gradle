@@ -1,0 +1,31 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot'
+	id 'io.spring.dependency-management'
+}
+
+java {
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
+}
+
+dependencies {
+	implementation project(':TinkoffService:tinkoff-service-api')
+	implementation project(':StockService:stock-service-api')
+	implementation project(path: ':Bus')
+
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${openApiVersion}"
+
+	implementation "ru.tinkoff.piapi:java-sdk-core:${tinkoffSDKVersion}"
+	implementation "com.squareup.okhttp3:okhttp:${okHttpVersion}"
+
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+	useJUnitPlatform()
+}

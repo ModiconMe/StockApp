@@ -5,5 +5,7 @@ subprojects {
 	task prepareKotlinBuildScriptModel{}
 }
 
-group = 'io.modicon'
-version = '1'
+allprojects {
+	group = 'io.modicon'
+	version = '1'
+}

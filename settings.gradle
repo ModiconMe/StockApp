@@ -8,19 +8,23 @@ pluginManagement {
 
 rootProject.name = 'StockApp'
 include 'Bus'
+
 include 'TinkoffService'
 include 'TinkoffService:tinkoff-service'
 include 'TinkoffService:tinkoff-service-api'
-//findProject(':TinkoffService:tinkoff-service')?.name = 'tinkoff-service'
-//findProject(':TinkoffService:tinkoff-service-api')?.name = 'tinkoff-service-api'
+findProject(':TinkoffService:tinkoff-service')?.name = 'tinkoff-service'
+findProject(':TinkoffService:tinkoff-service-api')?.name = 'tinkoff-service-api'
+
 include 'MoexService'
 include 'MoexService:moex-service'
 include 'MoexService:moex-service-api'
-//findProject(':MoexService:moex-service')?.name = 'moex-service'
-//findProject(':MoexService:moex-service-api')?.name = 'moex-service-api'
+findProject(':MoexService:moex-service')?.name = 'moex-service'
+findProject(':MoexService:moex-service-api')?.name = 'moex-service-api'
+
 include 'StockService'
 include 'StockService:stock-service'
 include 'StockService:stock-service-api'
-//findProject(':StockService:stock-service')?.name = 'stock-service'
-//findProject(':StockService:stock-service-api')?.name = 'stock-service-api'
+findProject(':StockService:stock-service')?.name = 'stock-service'
+findProject(':StockService:stock-service-api')?.name = 'stock-service-api'
+
 

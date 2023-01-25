@@ -26,5 +26,3 @@ include 'StockService:stock-service'
 include 'StockService:stock-service-api'
 findProject(':StockService:stock-service')?.name = 'stock-service'
 findProject(':StockService:stock-service-api')?.name = 'stock-service-api'
-
-

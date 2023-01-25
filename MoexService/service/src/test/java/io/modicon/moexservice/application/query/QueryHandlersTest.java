@@ -2,7 +2,7 @@ package io.modicon.moexservice.application.query;
 
 import io.modicon.moexservice.api.query.GetMoexBondPrices;
 import io.modicon.moexservice.api.query.GetMoexBonds;
-import io.modicon.moexservice.application.service.BondService;
+import io.modicon.moexservice.application.service.MoexBondService;
 import io.modicon.moexservice.domain.model.Bond;
 import io.modicon.moexservice.infrastructure.exception.ApiException;
 import io.modicon.stockservice.api.dto.StockDto;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 class QueryHandlersTest {
 
     @Mock
-    BondService bondService;
+    MoexBondService bondService;
 
     GetMoexBondPricesHandler getBondPricesHandler;
     GetMoexBondsHandler getBondsHandler;

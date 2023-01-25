@@ -21,7 +21,7 @@ public class TinkoffStockPriceService implements StockPriceService {
 
     @Override
     public List<StockWithPriceDto> getStocksWithPrices(ApiClientService apiClientService, List<String> figis) {
-        List<Stock> tinkoffStocks = apiClientService.tinkoffService().getStocks(new GetTinkoffStocks()).getStocks()
+        List<Stock> tinkoffStocks = apiClientService.tinkoffService().getStocks(new GetTinkoffStocks(figis)).getStocks()
                 .stream().map(StockMapper::mapToStock).toList();
         List<String> figisFromTinkoff = tinkoffStocks.stream().map(Stock::figi).toList();
         figis.removeAll(figisFromTinkoff);

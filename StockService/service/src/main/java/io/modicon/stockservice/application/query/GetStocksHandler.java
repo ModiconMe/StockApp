@@ -30,7 +30,7 @@ public class GetStocksHandler implements QueryHandler<GetStocksResult, GetStocks
     @Override
     public GetStocksResult handle(GetStocks query) {
 
-        List<String> figis = new ArrayList<>(query.getFigis());
+        List<String> figis = new ArrayList<>(query.getFigis().stream().map(String::trim).toList());
         List<Stock> resultList;
 
         log.info("get stocks from tinkoff-service");
@@ -45,14 +45,13 @@ public class GetStocksHandler implements QueryHandler<GetStocksResult, GetStocks
             log.info("get stocks from moex-service");
             List<Stock> moexStocks = moexService.getBonds(new GetMoexBonds(figis)).getBonds()
                     .stream().map(StockMapper::mapToStock).toList();
-            figis.removeAll(moexStocks.stream().map(Stock::figi).toList());
-            if (!figis.isEmpty())
-                throw exception(HttpStatus.NOT_FOUND, "stocks %s not fount", figis);
-            log.info("successfully received stocks from moex-service - {}", figisFromTinkoff);
-            resultList.addAll(tinkoffStocks);
+            List<String> figisFromMoex = moexStocks.stream().map(Stock::figi).toList();
+            figis.removeAll(figisFromMoex);
+            log.info("successfully received stocks from moex-service - {}", figisFromMoex);
+            resultList.addAll(moexStocks);
         }
 
-        return new GetStocksResult(tinkoffStocks.stream().map(StockMapper::mapToStockDto).toList());
+        return new GetStocksResult(resultList.stream().map(StockMapper::mapToStockDto).toList(), figis.stream().distinct().toList());
     }
 
 }

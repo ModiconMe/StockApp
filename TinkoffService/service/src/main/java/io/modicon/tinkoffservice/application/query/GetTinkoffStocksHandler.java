@@ -35,8 +35,7 @@ public class GetTinkoffStocksHandler implements QueryHandler<GetTinkoffStocksRes
                 .filter(Objects::nonNull)
                 .map(StockMapper::mapToDto).toList();
 
-        figis.removeAll(stocks.stream().map(StockDto::figi).toList());
-        return new GetTinkoffStocksResult(stocks, figis);
+        return new GetTinkoffStocksResult(stocks);
     }
 
 }

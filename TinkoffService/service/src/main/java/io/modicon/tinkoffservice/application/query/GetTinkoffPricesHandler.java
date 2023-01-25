@@ -36,8 +36,7 @@ public class GetTinkoffPricesHandler implements QueryHandler<GetTinkoffStockPric
                 .map((q) -> new StockPriceDto(q.getFigi(), toBigDecimal(q.getLastPrice().getUnits(), q.getLastPrice().getNano())))
                 .toList();
 
-        query.getFigis().removeAll(stockPrices.stream().map(StockPriceDto::figi).toList());
-        return new GetTinkoffStockPricesResult(stockPrices, figis);
+        return new GetTinkoffStockPricesResult(stockPrices);
     }
 
     private BigDecimal toBigDecimal(long val1, long val2) {

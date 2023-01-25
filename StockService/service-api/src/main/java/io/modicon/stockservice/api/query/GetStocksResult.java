@@ -13,5 +13,6 @@ import java.util.List;
 public class GetStocksResult {
 
     private List<StockDto> stocks;
+    private List<String> notFoundFigis;
 
 }

@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class BondServiceTest {
 
-    BondService bondService;
+    MoexBondService bondService;
 
     @Mock
     CorporateBondsClient corporateBondsClient;
@@ -41,7 +41,7 @@ class BondServiceTest {
 
     @BeforeEach
     void setUp() {
-        bondService = new BondService(corporateBondsClient, govBondsClient, parser);
+        bondService = new MoexBondService(corporateBondsClient, govBondsClient, parser);
     }
 
     @Test

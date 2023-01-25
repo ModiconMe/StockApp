@@ -32,7 +32,7 @@ public class GetStocksWithPricesHandler implements QueryHandler<GetStocksWithPri
     @Override
     public GetStocksWithPricesResult handle(GetStocksWithPrices query) {
 
-        List<String> figis = new ArrayList<>(query.getFigis());
+        List<String> figis = new ArrayList<>(query.getFigis().stream().map(String::trim).toList());
         List<StockWithPriceDto> resultList = new ArrayList<>();
 
         if (!figis.isEmpty()) {
@@ -49,10 +49,7 @@ public class GetStocksWithPricesHandler implements QueryHandler<GetStocksWithPri
             log.info("successfully received stocks with prices from moex-service - {}", stocksFromMoex);
         }
 
-        if (!figis.isEmpty())
-            throw exception(HttpStatus.NOT_FOUND, "stocks %s not fount", figis);
-
-        return new GetStocksWithPricesResult(resultList);
+        return new GetStocksWithPricesResult(resultList, figis.stream().distinct().toList());
     }
 
 }

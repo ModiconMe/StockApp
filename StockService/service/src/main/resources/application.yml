@@ -2,14 +2,10 @@ server:
   port: 8002
 
 api :
-  tinkoffConfig :
-    tinkoffService: tinkoff-service
-    getStocksByTickers: /api/stocks/getStocksByTickers
-    getPrices: /api/stocks/prices
+  tinkoffConfig:
+    tinkoffService: localhost:8004/api/stocks/
   moexConfig:
-    moexService: moex-service
-    getStocksByTickers: /api/bonds/getBondsByTickers
-    getPrices: /api/bonds/prices
+    moexService: localhost:8005/api/bonds/
 
 springdoc:
   api-docs:

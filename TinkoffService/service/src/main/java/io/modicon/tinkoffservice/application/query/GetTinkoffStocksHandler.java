@@ -2,6 +2,7 @@ package io.modicon.tinkoffservice.application.query;
 
 import io.modicon.stockservice.api.dto.StockDto;
 import io.modicon.cqrsbus.QueryHandler;
+import io.modicon.stockservice.api.dto.StockPriceDto;
 import io.modicon.tinkoffservice.api.query.GetTinkoffStocks;
 import io.modicon.tinkoffservice.api.query.GetTinkoffStocksResult;
 import io.modicon.tinkoffservice.application.StockMapper;
@@ -24,16 +25,18 @@ public class GetTinkoffStocksHandler implements QueryHandler<GetTinkoffStocksRes
 
     @Override
     public GetTinkoffStocksResult handle(GetTinkoffStocks query) {
-        List<CompletableFuture<Instrument>> instrumentsCF = query.getFigis()
+        List<String> figis = query.getFigis();
+        List<CompletableFuture<Instrument>> instrumentsCF = figis
                 .stream().map(stockService::getMarketInstrumentByFigi).toList();
 
         List<StockDto> stocks = instrumentsCF.stream()
                 .map((cf) -> cf.handle((s, t) -> t != null ? null : s))
                 .map(CompletableFuture::join)
-                .filter((Objects::nonNull))
+                .filter(Objects::nonNull)
                 .map(StockMapper::mapToDto).toList();
 
-        return new GetTinkoffStocksResult(stocks);
+        figis.removeAll(stocks.stream().map(StockDto::figi).toList());
+        return new GetTinkoffStocksResult(stocks, figis);
     }
 
 }

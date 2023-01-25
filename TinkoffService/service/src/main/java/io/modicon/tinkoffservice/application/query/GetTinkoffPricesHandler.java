@@ -1,5 +1,6 @@
 package io.modicon.tinkoffservice.application.query;
 
+import com.google.common.base.Strings;
 import io.modicon.cqrsbus.QueryHandler;
 import io.modicon.stockservice.api.dto.StockPriceDto;
 import io.modicon.tinkoffservice.api.query.GetTinkoffStockPrices;
@@ -10,9 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Predicate;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -26,12 +29,15 @@ public class GetTinkoffPricesHandler implements QueryHandler<GetTinkoffStockPric
         List<String> figis = query.getFigis();
         var cfs = figis.stream().map(stockService::getOrderBookByFigi).toList();
         List<StockPriceDto> stockPrices = cfs.stream()
-                .map((cf) -> cf.handle((s, t) -> t != null ? null : s))
+                .map(cf -> cf.handle((s, t) -> t != null ? null : s))
                 .map(CompletableFuture::join)
-                .filter((Objects::nonNull))
+                .filter(Objects::nonNull)
+                .filter(s -> !Strings.isNullOrEmpty(s.getFigi()))
                 .map((q) -> new StockPriceDto(q.getFigi(), toBigDecimal(q.getLastPrice().getUnits(), q.getLastPrice().getNano())))
                 .toList();
-        return new GetTinkoffStockPricesResult(stockPrices);
+
+        query.getFigis().removeAll(stockPrices.stream().map(StockPriceDto::figi).toList());
+        return new GetTinkoffStockPricesResult(stockPrices, figis);
     }
 
     private BigDecimal toBigDecimal(long val1, long val2) {

@@ -13,5 +13,6 @@ import java.util.List;
 public class GetTinkoffStockPricesResult {
 
     private List<StockPriceDto> stockPrices;
+    private List<String> notFoundFigis;
 
 }

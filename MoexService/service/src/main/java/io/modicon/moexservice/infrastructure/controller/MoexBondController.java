@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/bonds/")
+@RequestMapping("api/bonds")
 public class MoexBondController implements MoexServiceOperation {
 
     private final Bus bus;

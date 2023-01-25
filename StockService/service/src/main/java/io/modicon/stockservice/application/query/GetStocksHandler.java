@@ -30,11 +30,11 @@ public class GetStocksHandler implements QueryHandler<GetStocksResult, GetStocks
     @Override
     public GetStocksResult handle(GetStocks query) {
 
-        List<String> figis = new ArrayList<>(query.getFigi());
+        List<String> figis = new ArrayList<>(query.getFigis());
         List<Stock> resultList;
 
         log.info("get stocks from tinkoff-service");
-        List<Stock> tinkoffStocks = tinkoffService.getStocks(new GetTinkoffStocks()).getStocks()
+        List<Stock> tinkoffStocks = tinkoffService.getStocks(new GetTinkoffStocks(figis)).getStocks()
                 .stream().map(StockMapper::mapToStock).toList();
         List<String> figisFromTinkoff = tinkoffStocks.stream().map(Stock::figi).toList();
         figis.removeAll(figisFromTinkoff);

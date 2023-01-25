@@ -4,8 +4,8 @@ import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Getter
-@ConfigurationProperties(prefix = "io/modicon/stockservice/api")
+@ConfigurationProperties(prefix = "api")
 public class ApiConfig {
-    private TinkoffConfig tinkoffConfig;
-    private MoexConfig moexConfig;
+//    private TinkoffConfig tinkoffConfig;
+//    private MoexConfig moexConfig;
 }

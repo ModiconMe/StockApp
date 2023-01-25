@@ -1,5 +1,6 @@
 package io.modicon.stockservice.infrastructure.exception;
 
+import io.modicon.stockservice.api.dto.ApiExceptionDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;

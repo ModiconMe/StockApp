@@ -10,7 +10,7 @@ import ru.tinkoff.piapi.core.InvestApi;
 
 @Getter
 @Component
-@ConfigurationProperties(prefix = "io/modicon/stockservice/api")
+@ConfigurationProperties(prefix = "api")
 public class TinkoffApiConfig {
 
     @Value("${api.type}")

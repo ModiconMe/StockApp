@@ -12,6 +12,6 @@ import java.util.List;
 @Getter
 public class GetStocks implements Query<GetStocksResult> {
 
-    private List<String> figi;
+    private List<String> figis;
 
 }

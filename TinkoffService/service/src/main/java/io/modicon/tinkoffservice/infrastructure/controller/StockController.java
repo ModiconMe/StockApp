@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/stocks/")
+@RequestMapping("api/stocks")
 public class StockController implements TinkoffServiceOperation {
 
     private final Bus bus;

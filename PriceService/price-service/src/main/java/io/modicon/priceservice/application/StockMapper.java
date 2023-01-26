@@ -4,7 +4,7 @@ import io.modicon.priceservice.domain.model.StockWithPrice;
 import io.modicon.stockservice.api.dto.CurrencyDto;
 import io.modicon.stockservice.api.dto.StockWithPriceDto;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
 
 public class StockMapper {
     public static StockWithPriceDto mapToStockWithPricesDto(StockWithPrice stock) {
@@ -28,7 +28,18 @@ public class StockMapper {
                 .currency(CurrencyDto.valueOf(stockDto.currency().getCurrency()))
                 .source(stockDto.source())
                 .price(stockDto.price())
-                .updatedAt(LocalDateTime.now())
+                .build();
+    }
+
+    public static StockWithPrice updatePrice(StockWithPrice stock, BigDecimal price) {
+        return StockWithPrice.builder()
+                .ticker(stock.ticker())
+                .figi(stock.figi())
+                .name(stock.name())
+                .type(stock.type())
+                .currency(CurrencyDto.valueOf(stock.currency().getCurrency()))
+                .source(stock.source())
+                .price(price)
                 .build();
     }
 }

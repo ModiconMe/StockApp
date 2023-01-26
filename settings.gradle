@@ -7,6 +7,7 @@ pluginManagement {
 }
 
 rootProject.name = 'StockApp'
+
 include 'Bus'
 
 include 'TinkoffService'
@@ -26,14 +27,16 @@ include 'StockService:stock-service'
 include 'StockService:stock-service-api'
 findProject(':StockService:stock-service')?.name = 'stock-service'
 findProject(':StockService:stock-service-api')?.name = 'stock-service-api'
+
 include 'UserService'
 include 'UserService:user-service'
-findProject(':UserService:user-service')?.name = 'user-service'
 include 'UserService:user-service-api'
+findProject(':UserService:user-service')?.name = 'user-service'
 findProject(':UserService:user-service-api')?.name = 'user-service-api'
+
 include 'PriceService'
 include 'PriceService:price-service'
-findProject(':PriceService:price-service')?.name = 'price-service'
 include 'PriceService:price-service-api'
+findProject(':PriceService:price-service')?.name = 'price-service'
 findProject(':PriceService:price-service-api')?.name = 'price-service-api'
 

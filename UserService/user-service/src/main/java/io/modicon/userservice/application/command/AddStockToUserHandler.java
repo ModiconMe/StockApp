@@ -48,6 +48,7 @@ public class AddStockToUserHandler implements CommandHandler<AddStockToUserResul
 
         // check that user has this figis
         requestPositions.forEach(p -> {
+            p.setFigi(p.getFigi().trim());
             if (userPositions.contains(p))
                 throw exception(HttpStatus.BAD_REQUEST, "you already has stock with that figi: %s", p.getFigi());
         });

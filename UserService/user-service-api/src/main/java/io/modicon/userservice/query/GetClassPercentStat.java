@@ -1,6 +1,7 @@
 package io.modicon.userservice.query;
 
 import io.modicon.cqrsbus.Query;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class GetClassPercentStat implements Query<GetClassPercentStatResult> {
 
+    @NotEmpty(message = "user id should be provided")
     private String id;
 
 }

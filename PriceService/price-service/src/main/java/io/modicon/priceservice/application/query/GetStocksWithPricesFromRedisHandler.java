@@ -9,8 +9,6 @@ import io.modicon.priceservice.domain.repository.StockRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -31,7 +29,6 @@ public class GetStocksWithPricesFromRedisHandler implements QueryHandler<GetStoc
         return new GetStocksWithPricesFromRedisResult(
                 resultList.stream()
                 .filter(Objects::nonNull)
-                        .filter(stock -> stock.updatedAt().isAfter(LocalDateTime.now().minus(10, ChronoUnit.SECONDS)))
                 .map(StockMapper::mapToStockWithPricesDto)
                 .collect(Collectors.toSet())
         );

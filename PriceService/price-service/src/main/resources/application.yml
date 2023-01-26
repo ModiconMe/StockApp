@@ -5,6 +5,10 @@ logging:
   level:
     io.modicon.priceservice.application.client: debug
 
+api :
+  tinkoffConfig:
+    tinkoffService: localhost:8004/api/stocks/
+
 springdoc:
   api-docs:
     path: /api-docs

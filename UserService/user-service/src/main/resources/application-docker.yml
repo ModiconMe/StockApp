@@ -1,5 +1,5 @@
 server:
-  port: 8002
+  port: 8080
 
 api :
   stockConfig:
@@ -8,3 +8,17 @@ api :
 springdoc:
   api-docs:
     path: /api-docs
+
+spring:
+  datasource:
+    username: postgres
+    url: jdbc:postgresql://postgres:5432/postgres
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true

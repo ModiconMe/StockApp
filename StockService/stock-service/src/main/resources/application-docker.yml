@@ -5,7 +5,9 @@ api :
   tinkoffConfig:
     tinkoffService: tinkoff-service:8004/api/stocks/
   moexConfig:
-    moexService: moex-service:8005/api/stocks/
+    moexService: moex-service:8005/api/bonds/
+  priceConfig:
+    priceService: price-service:8003/api/prices/
 
 springdoc:
   api-docs:

@@ -7,11 +7,11 @@ logging:
 
 api :
   tinkoffConfig:
-    tinkoffService: localhost:8004/api/stocks/
+    tinkoffService: tinkoff-service:8004/api/stocks/
 
 spring:
   redis:
-    host: localhost
+    host: redis
     port: 6379
 
 springdoc:

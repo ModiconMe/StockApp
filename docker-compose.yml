@@ -1,19 +1,47 @@
 services:
   stock-service:
     image: modiconme/stock-service:latest
-    container_name: tinkoff-service
+    container_name: stock-service
     ports:
       - 8002:8002
     networks:
       - stock-app-network
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
+    depends_on:
+      - postgres
+    restart: always
+
+  price-service:
+    image: modiconme/price-service:latest
+    container_name: price-service
+    ports:
+      - 8003:8003
+    networks:
+      - stock-app-network
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
+      - "REDIS_HOST=redis"
+      - "REDIS_PORT=6379"
+    depends_on:
+      - postgres
+      - redis
+    links:
+      - redis
+    restart: always
 
   tinkoff-service:
     image: modiconme/tinkoff-service:latest
     container_name: tinkoff-service
     ports:
       - 8004:8004
+    environment:
+      - "ssoToken=${SSO_TOKEN}"
     networks:
       - stock-app-network
+    depends_on:
+      - postgres
+    restart: always
 
   moex-service:
     image: modiconme/moex-service:latest
@@ -22,6 +50,49 @@ services:
       - 8005:8005
     networks:
       - stock-app-network
+    depends_on:
+      - postgres
+    restart: always
+
+  user-service:
+    image: modiconme/user-service:latest
+    container_name: user-service
+    ports:
+      - "8080:8080"
+    expose:
+      - "8080"
+    networks:
+      - stock-app-network
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - postgres
+    restart: always
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    command: redis-server
+    ports:
+      - "6379:6379"
+    environment:
+      - "REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL"
+    restart: always
+    networks:
+      - stock-app-network
+
+  postgres:
+    image: postgres
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      PGDATA: /data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - stock-app-network
+    restart: unless-stopped
 
 networks:
   stock-app-network:

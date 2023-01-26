@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -22,7 +23,7 @@ public class MoexStockPriceService implements StockPriceService {
     private final MoexServiceClient moexServiceClient;
 
     @Override
-    public List<StockWithPriceDto> getStocksWithPrices(List<String> figis) {
+    public Set<StockWithPriceDto> getStocksWithPrices(List<String> figis) {
         List<Stock> moexStocks = moexServiceClient.getBonds(new GetMoexBonds(figis)).getBonds()
                 .stream().map(StockMapper::mapToStock).toList();
         List<String> figisFromMoex = moexStocks.stream().map(Stock::figi).toList();
@@ -31,8 +32,8 @@ public class MoexStockPriceService implements StockPriceService {
                 .getBondPrices();
         Map<String, BigDecimal> moexFigisPrices = moexStockPrices.stream()
                 .collect(Collectors.toMap(StockPriceDto::figi, StockPriceDto::price));
-        List<StockWithPriceDto> stockWithPriceDtos = moexStocks.stream()
-                .map(s -> StockMapper.mapToStockWithPricesDto(s, moexFigisPrices.get(s.figi()))).toList();
+        Set<StockWithPriceDto> stockWithPriceDtos = moexStocks.stream()
+                .map(s -> StockMapper.mapToStockWithPricesDto(s, moexFigisPrices.get(s.figi()))).collect(Collectors.toSet());
         return stockWithPriceDtos;
     }
 

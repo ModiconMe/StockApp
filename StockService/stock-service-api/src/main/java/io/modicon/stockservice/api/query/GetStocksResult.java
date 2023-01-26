@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,6 +14,6 @@ import java.util.List;
 public class GetStocksResult {
 
     private List<StockDto> stocks;
-    private List<String> notFoundFigis;
+    private Set<String> notFoundFigis;
 
 }

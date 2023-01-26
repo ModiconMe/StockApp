@@ -9,7 +9,9 @@ import io.modicon.stockservice.model.Stock;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class EntitySource {
     public List<String> figis = new ArrayList<>();
@@ -17,24 +19,24 @@ public class EntitySource {
     List<Stock> stocksList = new ArrayList<>();
     public List<StockDto> stocks = new ArrayList<>();
     public List<StockPriceDto> stocksPrices = new ArrayList<>();
-    public List<StockWithPriceDto> stocksWithPrice = new ArrayList<>();
+    public Set<StockWithPriceDto> stocksWithPrice = new HashSet<>();
 
     Stock stock1 = new Stock("ticker1", "ticker1", "name1", "type1", Currency.rub, "source1");
     Stock stock2 = new Stock("ticker2", "ticker2", "name2", "type2", Currency.usd, "source2");
     Stock stock3 = new Stock("ticker3", "ticker3", "name3", "type3", Currency.chf, "source3");
     Stock stock4 = new Stock("ticker4", "ticker4", "name4", "type4", Currency.cny, "source4");
-    StockDto stockDto1 = new StockDto("ticker1", "ticker1", "name1", "type1", CurrencyDto.rub, "source1");
-    StockDto stockDto2 = new StockDto("ticker2", "ticker2", "name2", "type2", CurrencyDto.usd, "source2");
-    StockDto stockDto3 = new StockDto("ticker3", "ticker3", "name3", "type3", CurrencyDto.chf, "source3");
-    StockDto stockDto4 = new StockDto("ticker4", "ticker4", "name4", "type4", CurrencyDto.cny, "source4");
+    StockDto stockDto1 = new StockDto("ticker1", "ticker1", "name1", "type1", CurrencyDto.RUB, "source1");
+    StockDto stockDto2 = new StockDto("ticker2", "ticker2", "name2", "type2", CurrencyDto.USD, "source2");
+    StockDto stockDto3 = new StockDto("ticker3", "ticker3", "name3", "type3", CurrencyDto.CHF, "source3");
+    StockDto stockDto4 = new StockDto("ticker4", "ticker4", "name4", "type4", CurrencyDto.CNY, "source4");
     StockPriceDto stockPrice1 = new StockPriceDto("ticker1", BigDecimal.valueOf(100.5));
     StockPriceDto stockPrice2 = new StockPriceDto("ticker2", BigDecimal.valueOf(150.5));
     StockPriceDto stockPrice3 = new StockPriceDto("ticker3", BigDecimal.valueOf(50.5));
     StockPriceDto stockPrice4 = new StockPriceDto("ticker4", BigDecimal.valueOf(150.5));
-    StockWithPriceDto stockWithPrice1 = new StockWithPriceDto("ticker1", "ticker1", "name1", "type1", CurrencyDto.rub, "source1", BigDecimal.valueOf(100.5));
-    StockWithPriceDto stockWithPrice2 = new StockWithPriceDto("ticker2", "ticker2", "name2", "type2", CurrencyDto.usd, "source2", BigDecimal.valueOf(150.5));
-    StockWithPriceDto stockWithPrice3 = new StockWithPriceDto("ticker3", "ticker3", "name3", "type3", CurrencyDto.chf, "source3", BigDecimal.valueOf(50.5));
-    StockWithPriceDto stockWithPrice4 = new StockWithPriceDto("ticker4", "ticker4", "name4", "type4", CurrencyDto.cny, "source4", BigDecimal.valueOf(150.5));
+    StockWithPriceDto stockWithPrice1 = new StockWithPriceDto("ticker1", "ticker1", "name1", "type1", CurrencyDto.RUB, "source1", BigDecimal.valueOf(100.5));
+    StockWithPriceDto stockWithPrice2 = new StockWithPriceDto("ticker2", "ticker2", "name2", "type2", CurrencyDto.USD, "source2", BigDecimal.valueOf(150.5));
+    StockWithPriceDto stockWithPrice3 = new StockWithPriceDto("ticker3", "ticker3", "name3", "type3", CurrencyDto.CHF, "source3", BigDecimal.valueOf(50.5));
+    StockWithPriceDto stockWithPrice4 = new StockWithPriceDto("ticker4", "ticker4", "name4", "type4", CurrencyDto.CNY, "source4", BigDecimal.valueOf(150.5));
 
     {
         stocksList.add(stock1);

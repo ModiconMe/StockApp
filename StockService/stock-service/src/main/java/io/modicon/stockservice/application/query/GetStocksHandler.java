@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @Slf4j
@@ -48,7 +49,7 @@ public class GetStocksHandler implements QueryHandler<GetStocksResult, GetStocks
             resultList.addAll(moexStocks);
         }
 
-        return new GetStocksResult(resultList.stream().map(StockMapper::mapToStockDto).toList(), figis.stream().distinct().toList());
+        return new GetStocksResult(resultList.stream().map(StockMapper::mapToStockDto).toList(), new HashSet<>(figis));
     }
 
 }

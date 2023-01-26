@@ -2,7 +2,6 @@ package io.modicon.stockservice.application;
 
 import io.modicon.stockservice.api.dto.CurrencyDto;
 import io.modicon.stockservice.api.dto.StockDto;
-import io.modicon.stockservice.api.dto.StockPriceDto;
 import io.modicon.stockservice.api.dto.StockWithPriceDto;
 import io.modicon.stockservice.model.Currency;
 import io.modicon.stockservice.model.Stock;
@@ -16,7 +15,7 @@ public class StockMapper {
                 .figi(stock.figi())
                 .name(stock.name())
                 .type(stock.type())
-                .currency(CurrencyDto.valueOf(stock.currency().getCurrency().toLowerCase()))
+                .currency(CurrencyDto.valueOf(stock.currency().getCurrency()))
                 .source(stock.source())
                 .build();
     }
@@ -38,7 +37,7 @@ public class StockMapper {
                 .figi(stock.figi())
                 .name(stock.name())
                 .type(stock.type())
-                .currency(CurrencyDto.valueOf(stock.currency().getCurrency().toLowerCase()))
+                .currency(CurrencyDto.valueOf(stock.currency().getCurrency()))
                 .source(stock.source())
                 .price(price)
                 .build();

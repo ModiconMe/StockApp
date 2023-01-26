@@ -1,7 +1,6 @@
 package io.modicon.stockservice.application.query;
 
 import io.modicon.cqrsbus.QueryHandler;
-
 import io.modicon.stockservice.api.dto.StockWithPriceDto;
 import io.modicon.stockservice.api.query.GetStocksWithPrices;
 import io.modicon.stockservice.api.query.GetStocksWithPricesResult;
@@ -12,7 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -30,19 +31,19 @@ public class GetStocksWithPricesHandler implements QueryHandler<GetStocksWithPri
 
         if (!figis.isEmpty()) {
             log.info("get stocks from tinkoff-service");
-            List<StockWithPriceDto> stocksFromTinkoff = tinkoffStockPriceService.getStocksWithPrices(figis);
+            Set<StockWithPriceDto> stocksFromTinkoff = tinkoffStockPriceService.getStocksWithPrices(figis);
             resultList.addAll(stocksFromTinkoff);
             log.info("successfully received stocks with prices from tinkoff-service - {}", stocksFromTinkoff);
         }
 
         if (!figis.isEmpty()) {
             log.info("get stocks from moex-service");
-            List<StockWithPriceDto> stocksFromMoex = moexStockPriceService.getStocksWithPrices(figis);
+            Set<StockWithPriceDto> stocksFromMoex = moexStockPriceService.getStocksWithPrices(figis);
             resultList.addAll(stocksFromMoex);
             log.info("successfully received stocks with prices from moex-service - {}", stocksFromMoex);
         }
 
-        return new GetStocksWithPricesResult(resultList, figis.stream().distinct().toList());
+        return new GetStocksWithPricesResult(resultList, new HashSet<>(figis));
     }
 
 }

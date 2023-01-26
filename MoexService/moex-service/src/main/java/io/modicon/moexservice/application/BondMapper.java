@@ -11,7 +11,7 @@ public class BondMapper {
                 .name(bond.name())
                 .figi(bond.ticker())
                 .type("Bond")
-                .currency(CurrencyDto.rub)
+                .currency(CurrencyDto.RUB)
                 .source("MOEX")
                 .build();
     }

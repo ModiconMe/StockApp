@@ -1,0 +1,16 @@
+package io.modicon.userservice.query;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+public class GetPortfolioCostResult {
+
+    private BigDecimal cost;
+
+}

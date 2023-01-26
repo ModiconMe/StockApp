@@ -11,7 +11,7 @@ public class StockMapper {
                 .figi(instrument.getFigi())
                 .name(instrument.getName())
                 .type(instrument.getInstrumentType())
-                .currency(CurrencyDto.valueOf(instrument.getCurrency()))
+                .currency(CurrencyDto.valueOf(instrument.getCurrency().toUpperCase()))
                 .source("TINKOFF")
                 .build();
     }

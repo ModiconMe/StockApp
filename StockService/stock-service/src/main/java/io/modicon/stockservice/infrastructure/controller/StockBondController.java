@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/stocks/")
+@RequestMapping("api/stocks")
 public class StockBondController implements StockBondOperation {
 
     private final Bus bus;

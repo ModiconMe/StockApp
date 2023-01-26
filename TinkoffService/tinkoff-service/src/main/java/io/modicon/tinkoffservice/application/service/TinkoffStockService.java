@@ -26,12 +26,6 @@ public class TinkoffStockService implements StockService {
         return investApi.getMarketDataService().getOrderBook(figi, 1);
     }
 
-//    private Double toDouble(long val1, long val2) {
-//        String units = String.valueOf(val1);
-//        String nano = String.valueOf(val2);
-//        return Double.parseDouble(units + "." + nano);
-//    }
-
 //    @Override
 //    public StocksPricesDto getPrices(FigisDto figisDto) {
 //        var cfs = figisDto.figis().stream().map(this::getOrderBookByFigi).toList();

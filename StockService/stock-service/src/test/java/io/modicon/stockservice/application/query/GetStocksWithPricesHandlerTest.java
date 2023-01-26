@@ -12,8 +12,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -39,12 +39,10 @@ class GetStocksWithPricesHandlerTest {
     void should_returnCorrectData_whenOnlyTinkoffStocks() {
         when(tinkoffStockPriceService.getStocksWithPrices(any()))
                 .thenReturn(entitySource.stocksWithPrice);
-//        when(moexStockPriceService.getStocksWithPrices(any()))
-//                .thenReturn(entitySource.stocksWithPrice);
 
         GetStocksWithPricesResult result = getStocksWithPricesHandler.handle(new GetStocksWithPrices(entitySource.figis));
 
-        List<StockWithPriceDto> stocks = result.getStocks();
+        Set<StockWithPriceDto> stocks = new HashSet<>(result.getStocks());
         assertThat(stocks).isNotEmpty();
         assertThat(stocks.size()).isEqualTo(entitySource.stocksWithPrice.size());
         assertThat(stocks).isEqualTo(entitySource.stocksWithPrice);
@@ -53,13 +51,13 @@ class GetStocksWithPricesHandlerTest {
     @Test
     void should_returnCorrectData_whenOnlyMoexStocks() {
         when(tinkoffStockPriceService.getStocksWithPrices(any()))
-                .thenReturn(new ArrayList<>());
+                .thenReturn(new HashSet<>());
         when(moexStockPriceService.getStocksWithPrices(any()))
                 .thenReturn(entitySource.stocksWithPrice);
 
         GetStocksWithPricesResult result = getStocksWithPricesHandler.handle(new GetStocksWithPrices(entitySource.figis));
 
-        List<StockWithPriceDto> stocks = result.getStocks();
+        Set<StockWithPriceDto> stocks = new HashSet<>(result.getStocks());
         assertThat(stocks).isNotEmpty();
         assertThat(stocks.size()).isEqualTo(entitySource.stocksWithPrice.size());
         assertThat(stocks).isEqualTo(entitySource.stocksWithPrice);

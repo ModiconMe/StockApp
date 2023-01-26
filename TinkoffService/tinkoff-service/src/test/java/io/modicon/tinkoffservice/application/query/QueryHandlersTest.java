@@ -37,7 +37,7 @@ class QueryHandlersTest {
     static final String STOCK_FIGI = "Test figi";
     static final String STOCK_TYPE = "Test type";
     static final String STOCK_SOURCE = "TINKOFF";
-    static final CurrencyDto STOCK_CURR = CurrencyDto.rub;
+    static final CurrencyDto STOCK_CURR = CurrencyDto.RUB;
     static final long STOCK_UNITS = 100;
     static final int STOCK_NANO = 50;
     static final BigDecimal STOCK_PRICE = BigDecimal.valueOf(100.50);

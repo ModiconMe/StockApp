@@ -17,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -50,7 +51,7 @@ class GetStocksHandlerTest {
         assertThat(stocks.size()).isEqualTo(entitySource.stocks.size());
         assertThat(stocks).isEqualTo(entitySource.stocks);
 
-        List<String> notFoundFigis = result.getNotFoundFigis();
+        Set<String> notFoundFigis = result.getNotFoundFigis();
         assertThat(notFoundFigis).isEmpty();
     }
 
@@ -68,7 +69,7 @@ class GetStocksHandlerTest {
         assertThat(stocks.size()).isEqualTo(entitySource.stocks.size());
         assertThat(stocks).isEqualTo(entitySource.stocks);
 
-        List<String> notFoundFigis = result.getNotFoundFigis();
+        Set<String> notFoundFigis = result.getNotFoundFigis();
         assertThat(notFoundFigis).isEmpty();
     }
 
@@ -86,7 +87,7 @@ class GetStocksHandlerTest {
         assertThat(stocks.size()).isEqualTo(entitySource.stocks.size());
         assertThat(stocks).isEqualTo(entitySource.stocks);
 
-        List<String> notFoundFigis = result.getNotFoundFigis();
+        Set<String> notFoundFigis = result.getNotFoundFigis();
         assertThat(notFoundFigis).isNotEmpty();
     }
 

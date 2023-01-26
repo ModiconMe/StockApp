@@ -6,14 +6,14 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum CurrencyDto {
-    rub("RUB"),
-    usd("USD"),
-    eur("EUR"),
-    gbp("GBP"),
-    hkd("HKD"),
-    chf("CHF"),
-    jpy("JPY"),
-    cny("CNY");
+    RUB("RUB"),
+    USD("USD"),
+    EUR("EUR"),
+    GBP("GBP"),
+    HKD("HKD"),
+    CHF("CHF"),
+    JPY("JPY"),
+    CNY("CNY");
 
     private final String currency;
 }

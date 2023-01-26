@@ -2,9 +2,6 @@ package io.modicon.stockservice.application.service;
 
 import io.modicon.moexservice.api.query.GetMoexBondPricesResult;
 import io.modicon.moexservice.api.query.GetMoexBondsResult;
-import io.modicon.stockservice.api.dto.CurrencyDto;
-import io.modicon.stockservice.api.dto.StockDto;
-import io.modicon.stockservice.api.dto.StockPriceDto;
 import io.modicon.stockservice.api.dto.StockWithPriceDto;
 import io.modicon.stockservice.application.EntitySource;
 import io.modicon.stockservice.application.client.MoexServiceClient;
@@ -17,9 +14,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -51,7 +47,7 @@ class StockPriceServiceTest {
         when(moexServiceClient.getPricesByFigis(any()))
                 .thenReturn(new GetMoexBondPricesResult(entitySource.stocksPrices));
 
-        List<StockWithPriceDto> result = moexStockPriceService.getStocksWithPrices(entitySource.figis);
+        Set<StockWithPriceDto> result = moexStockPriceService.getStocksWithPrices(entitySource.figis);
 
         assertThat(result).isNotEmpty();
         assertThat(result.size()).isEqualTo(entitySource.stocksWithPrice.size());
@@ -67,7 +63,7 @@ class StockPriceServiceTest {
         when(tinkoffServiceClient.getPrices(any()))
                 .thenReturn(new GetTinkoffStockPricesResult(entitySource.stocksPrices));
 
-        List<StockWithPriceDto> result = tinkoffStockPriceService.getStocksWithPrices(entitySource.figis);
+        Set<StockWithPriceDto> result = tinkoffStockPriceService.getStocksWithPrices(entitySource.figis);
 
         assertThat(result).isNotEmpty();
         assertThat(result.size()).isEqualTo(entitySource.stocksWithPrice.size());
@@ -83,7 +79,7 @@ class StockPriceServiceTest {
         when(tinkoffServiceClient.getPrices(any()))
                 .thenReturn(new GetTinkoffStockPricesResult(new ArrayList<>()));
 
-        List<StockWithPriceDto> result = tinkoffStockPriceService.getStocksWithPrices(entitySource.figis);
+        Set<StockWithPriceDto> result = tinkoffStockPriceService.getStocksWithPrices(entitySource.figis);
 
         assertThat(result).isEmpty();
 

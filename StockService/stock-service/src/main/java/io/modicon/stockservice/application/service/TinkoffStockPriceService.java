@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -22,7 +23,7 @@ public class TinkoffStockPriceService implements StockPriceService {
     private final TinkoffServiceClient tinkoffServiceClient;
 
     @Override
-    public List<StockWithPriceDto> getStocksWithPrices(List<String> figis) {
+    public Set<StockWithPriceDto> getStocksWithPrices(List<String> figis) {
         List<Stock> tinkoffStocks = tinkoffServiceClient.getStocks(new GetTinkoffStocks(figis)).getStocks()
                 .stream().map(StockMapper::mapToStock).toList();
         List<String> figisFromTinkoff = tinkoffStocks.stream().map(Stock::figi).toList();
@@ -32,7 +33,7 @@ public class TinkoffStockPriceService implements StockPriceService {
         Map<String, BigDecimal> tinkoffFigisPrices = tinkoffStockPrices.stream()
                 .collect(Collectors.toMap(StockPriceDto::figi, StockPriceDto::price));
         return tinkoffStocks.stream()
-                .map(s -> StockMapper.mapToStockWithPricesDto(s, tinkoffFigisPrices.get(s.figi()))).toList();
+                .map(s -> StockMapper.mapToStockWithPricesDto(s, tinkoffFigisPrices.get(s.figi()))).collect(Collectors.toSet());
     }
 
 }

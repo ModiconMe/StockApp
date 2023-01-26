@@ -28,7 +28,7 @@ class TinkoffApiClientFactory {
     public InvestApi getApi(String token) {
         String apiType = tinkoffApiConfig.getApiType();
         switch (apiType) {
-            case "io/modicon/stockservice/api" -> {
+            case "api" -> {
                 log.info("create tinkoff api");
                 return InvestApi.create(token);
             }

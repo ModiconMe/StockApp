@@ -6,6 +6,8 @@ api :
     tinkoffService: localhost:8004/api/stocks/
   moexConfig:
     moexService: localhost:8005/api/bonds/
+  priceConfig:
+    priceService: localhost:8003/api/prices/
 
 springdoc:
   api-docs:

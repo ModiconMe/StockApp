@@ -1,5 +1,6 @@
 package io.modicon.moexservice.application.service;
 
+import io.modicon.moexservice.infrastructure.exception.ApiException;
 import io.modicon.moexservice.domain.model.Bond;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -17,8 +18,6 @@ import java.io.StringReader;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
-import static io.modicon.moexservice.infrastructure.exception.ApiException.exception;
 
 @Slf4j
 @Service
@@ -55,7 +54,7 @@ public class MoexBondParserImpl implements BondParser {
             }
             } catch (Exception ex) {
             log.error("xml parsing error, xml:{}", ratesAsString, ex);
-            throw exception(HttpStatus.BAD_REQUEST, ex.getMessage());
+            throw ApiException.exception(HttpStatus.BAD_REQUEST, ex.getMessage());
         }
         return bonds;
     }

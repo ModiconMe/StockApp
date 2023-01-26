@@ -32,4 +32,8 @@ findProject(':UserService:user-service')?.name = 'user-service'
 include 'UserService:user-service-api'
 findProject(':UserService:user-service-api')?.name = 'user-service-api'
 include 'PriceService'
+include 'PriceService:price-service'
+findProject(':PriceService:price-service')?.name = 'price-service'
+include 'PriceService:price-service-api'
+findProject(':PriceService:price-service-api')?.name = 'price-service-api'
 

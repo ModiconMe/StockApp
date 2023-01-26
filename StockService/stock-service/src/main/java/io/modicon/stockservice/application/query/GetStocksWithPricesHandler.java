@@ -22,12 +22,22 @@ public class GetStocksWithPricesHandler implements QueryHandler<GetStocksWithPri
 
     private final TinkoffStockPriceService tinkoffStockPriceService;
     private final MoexStockPriceService moexStockPriceService;
+//    private final PriceServiceClient priceServiceClient;
 
     @Override
     public GetStocksWithPricesResult handle(GetStocksWithPrices query) {
 
         List<String> figis = new ArrayList<>(query.getFigis().stream().map(String::trim).toList());
         List<StockWithPriceDto> resultList = new ArrayList<>();
+
+//        if (!figis.isEmpty()) {
+//            log.info("get stocks from tinkoff-service");
+//            Set<StockWithPriceDto> stocksFromPriceService = priceServiceClient.getPricesFromCache(new GetStocksWithPricesFromRedis(figis)).getStockPrices();
+//            List<String> figisFromPriceService = stocksFromPriceService.stream().map(StockWithPriceDto::figi).toList();
+//            figis.removeAll(figisFromPriceService);
+//            resultList.addAll(stocksFromPriceService);
+//            log.info("successfully received stocks with prices from price-service - {}", stocksFromPriceService);
+//        }
 
         if (!figis.isEmpty()) {
             log.info("get stocks from tinkoff-service");

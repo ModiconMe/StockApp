@@ -1,5 +1,6 @@
 package io.modicon.moexservice.application.service;
 
+import io.modicon.moexservice.infrastructure.exception.ApiException;
 import io.modicon.moexservice.application.client.CorporateBondsClient;
 import io.modicon.moexservice.application.client.GovBondsClient;
 import io.modicon.moexservice.domain.model.Bond;
@@ -10,8 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
-import static io.modicon.moexservice.infrastructure.exception.ApiException.exception;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -29,7 +28,7 @@ public class MoexBondService {
         List<Bond> corporateBonds = parser.parse(xmlFromMoex);
         if (corporateBonds.isEmpty()) {
             log.error("MOEX isn't answering for getting corporate bonds");
-            throw exception(HttpStatus.TOO_MANY_REQUESTS, "MOEX isn't answering for getting corporate bonds");
+            throw ApiException.exception(HttpStatus.TOO_MANY_REQUESTS, "MOEX isn't answering for getting corporate bonds");
         }
         return corporateBonds;
     }
@@ -41,7 +40,7 @@ public class MoexBondService {
         List<Bond> govBonds = parser.parse(xmlFromMoex);
         if (govBonds.isEmpty()) {
             log.error("MOEX isn't answering for getting government bonds");
-            throw exception(HttpStatus.TOO_MANY_REQUESTS, "MOEX isn't answering for getting government bonds");
+            throw ApiException.exception(HttpStatus.TOO_MANY_REQUESTS, "MOEX isn't answering for getting government bonds");
         }
         return govBonds;
     }

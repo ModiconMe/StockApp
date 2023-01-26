@@ -11,11 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Predicate;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -35,7 +33,6 @@ public class GetTinkoffPricesHandler implements QueryHandler<GetTinkoffStockPric
                 .filter(s -> !Strings.isNullOrEmpty(s.getFigi()))
                 .map((q) -> new StockPriceDto(q.getFigi(), toBigDecimal(q.getLastPrice().getUnits(), q.getLastPrice().getNano())))
                 .toList();
-
         return new GetTinkoffStockPricesResult(stockPrices);
     }
 

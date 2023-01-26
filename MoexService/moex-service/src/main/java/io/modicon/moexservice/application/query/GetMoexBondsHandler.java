@@ -6,7 +6,6 @@ import io.modicon.moexservice.api.query.GetMoexBondsResult;
 import io.modicon.moexservice.application.BondMapper;
 import io.modicon.moexservice.application.service.MoexBondService;
 import io.modicon.moexservice.domain.model.Bond;
-import io.modicon.stockservice.api.dto.StockDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

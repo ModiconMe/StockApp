@@ -1,0 +1,10 @@
+server:
+  port: 8003
+
+logging:
+  level:
+    io.modicon.priceservice.application.client: debug
+
+springdoc:
+  api-docs:
+    path: /api-docs

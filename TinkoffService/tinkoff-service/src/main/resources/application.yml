@@ -2,4 +2,4 @@ server:
   port: 8004
 
 api:
-  type: sandbox # api, sandbox, readonlyApi
+  type: api # api, sandbox, readonlyApi

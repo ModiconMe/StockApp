@@ -12,9 +12,9 @@ services:
       - postgres
     restart: always
 
-  price-service:
-    image: modiconme/price-service:latest
-    container_name: price-service
+  stock-cache-service:
+    image: modiconme/stock-cache-service:latest
+    container_name: stock-cache-service
     ports:
       - "8003:8003"
     networks:

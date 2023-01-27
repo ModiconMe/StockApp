@@ -12,6 +12,7 @@ java {
 dependencies {
     implementation project(':Bus')
     implementation project(':StockService:stock-service-api')
+    implementation project(':OpenFigiService:openfigi-service-api')
     annotationProcessor 'org.projectlombok:lombok'
     compileOnly 'org.projectlombok:lombok'
 

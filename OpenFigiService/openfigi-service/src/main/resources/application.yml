@@ -1,0 +1,14 @@
+server:
+  port: 8007
+
+logging:
+  level:
+    io.modicon.openfigiservice.application.client: debug
+
+api :
+  openFigiConfig:
+    openFigi: https://api.openfigi.com/v3
+
+springdoc:
+  api-docs:
+    path: /api-docs

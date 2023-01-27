@@ -7,7 +7,7 @@ api :
   moexConfig:
     moexService: moex-service:8005/api/bonds/
   priceConfig:
-    priceService: price-service:8003/api/prices/
+    priceService: stock-cache-service:8003/api/prices/
 
 springdoc:
   api-docs:

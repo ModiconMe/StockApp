@@ -12,7 +12,7 @@ java {
 dependencies {
     implementation project(':MoexService:moex-service-api')
     implementation project(':TinkoffService:tinkoff-service-api')
-    implementation project(':PriceService:price-service-api')
+    implementation project(':StockCacheService:stock-cache-service-api')
     implementation project(':StockService:stock-service-api')
     implementation project(path: ':Bus')
 

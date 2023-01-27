@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 import java.util.Map;
 
 @RequiredArgsConstructor
-@Service
 public class FakeCurrencyService implements CurrencyService {
 
     @Override

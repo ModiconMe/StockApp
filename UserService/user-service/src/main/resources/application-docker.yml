@@ -4,6 +4,12 @@ server:
 api :
   stockConfig:
     stockService: stock-service:8002/api/stocks/
+  currencyConfig:
+    currencyService: cbr-service:8006/api/currency/
+  openFigiConfig:
+    openFigiService: openfigi-service:8007/api/stocks/
+  stockInfoConfig:
+    stockInfoService: stock-cache-service:8003/api/stocks/
 
 springdoc:
   api-docs:
@@ -16,7 +22,7 @@ spring:
     password: root
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect

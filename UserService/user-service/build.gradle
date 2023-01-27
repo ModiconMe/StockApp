@@ -12,6 +12,9 @@ java {
 dependencies {
     implementation project(':StockService:stock-service-api')
     implementation project(':UserService:user-service-api')
+    implementation project(':CbrService:cbr-service-api')
+    implementation project(':OpenFigiService:openfigi-service-api')
+    implementation project(':StockCacheService:stock-cache-service-api')
     implementation project(path: ':Bus')
 
     implementation 'org.springframework.boot:spring-boot-starter-web'

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
 
-@Slf4j
 @RequiredArgsConstructor
 @Service
 public class GetCurrentCurrencyRateHandler implements QueryHandler<GetCurrentCurrencyRateResult, GetCurrentCurrencyRate> {

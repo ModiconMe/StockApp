@@ -1,0 +1,15 @@
+server:
+  port: 8006
+
+cbr:
+  currency:
+    url: https://www.cbr.ru/scripts/XML_daily.asp
+
+logging:
+  level:
+    io.modicon.cbrservice.application.client: debug
+
+spring:
+  cache:
+    caffeine:
+      spec: maximumSize=48, expireAfterAccess=10s

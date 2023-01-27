@@ -40,3 +40,9 @@ include 'PriceService:price-service-api'
 findProject(':PriceService:price-service')?.name = 'price-service'
 findProject(':PriceService:price-service-api')?.name = 'price-service-api'
 
+include 'CbrService'
+include 'CbrService:cbr-service'
+include 'CbrService:cbr-service-api'
+findProject(':CbrService:cbr-service')?.name = 'cbr-service'
+findProject(':CbrService:cbr-service-api')?.name = 'cbr-service-api'
+

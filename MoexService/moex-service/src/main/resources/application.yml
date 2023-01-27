@@ -10,7 +10,7 @@ moex:
 
 logging:
   level:
-    io.modicon.priceservice.application.client: debug
+    io.modicon.cbrservice.application.client: debug
 
 spring:
   cache:

@@ -1,7 +1,5 @@
 package io.modicon.moexservice.application.service;
 
-import io.modicon.moexservice.application.service.BondParser;
-import io.modicon.moexservice.application.service.MoexBondParserImpl;
 import io.modicon.moexservice.domain.model.Bond;
 import io.modicon.moexservice.infrastructure.exception.ApiException;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +8,8 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class MoexBondParserImplTest {
 

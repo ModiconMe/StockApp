@@ -3,7 +3,7 @@ services:
     image: modiconme/stock-service:latest
     container_name: stock-service
     ports:
-      - 8002:8002
+      - "8002:8002"
     networks:
       - stock-app-network
     environment:
@@ -16,7 +16,7 @@ services:
     image: modiconme/price-service:latest
     container_name: price-service
     ports:
-      - 8003:8003
+      - "8003:8003"
     networks:
       - stock-app-network
     environment:
@@ -34,24 +34,35 @@ services:
     image: modiconme/tinkoff-service:latest
     container_name: tinkoff-service
     ports:
-      - 8004:8004
+      - "8004:8004"
     environment:
       - "ssoToken=${SSO_TOKEN}"
+    depends_on:
+      - stock-service
     networks:
       - stock-app-network
-    depends_on:
-      - postgres
     restart: always
 
   moex-service:
     image: modiconme/moex-service:latest
     container_name: moex-service
     ports:
-      - 8005:8005
+      - "8005:8005"
+    depends_on:
+      - stock-service
     networks:
       - stock-app-network
+    restart: always
+
+  cbr-service:
+    image: modiconme/cbr-service:latest
+    container_name: cbr-service
+    ports:
+      - "8006:8006"
     depends_on:
-      - postgres
+      - stock-service
+    networks:
+      - stock-app-network
     restart: always
 
   user-service:
@@ -59,8 +70,6 @@ services:
     container_name: user-service
     ports:
       - "8080:8080"
-    expose:
-      - "8080"
     networks:
       - stock-app-network
     environment:

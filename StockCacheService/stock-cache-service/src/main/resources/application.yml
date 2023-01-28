@@ -3,7 +3,7 @@ server:
 
 logging:
   level:
-    io.modicon.priceservice.application.client: debug
+    io.modicon.stockcacheservice.application.client: debug
 
 api :
   tinkoffConfig:

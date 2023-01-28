@@ -36,7 +36,7 @@ public class SearchStockInfoByTickerHandler implements QueryHandler<SearchStockI
             log.info("search stocks info in redis {}", stock);
             List<FoundedStockDto> stocksFromRedis = stockInfoServiceClient
                     .getStockInfoFromCache(new GetStocksInfoFromRedis(List.of(stock))).getStocks();
-            if (stocksFromRedis != null) {
+            if (!stocksFromRedis.isEmpty()) {
                 log.info("successfully founded stocks in redis {}", stocksFromRedis);
                 return new SearchStockInfoByTickerResult(stocksFromRedis);
             }

@@ -65,6 +65,17 @@ services:
       - stock-app-network
     restart: always
 
+  openfigi-service:
+    image: modiconme/openfigi-service:latest
+    container_name: openfigi-service
+    ports:
+      - "8007:8007"
+    depends_on:
+      - stock-service
+    networks:
+      - stock-app-network
+    restart: always
+
   user-service:
     image: modiconme/user-service:latest
     container_name: user-service

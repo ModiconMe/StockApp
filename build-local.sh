@@ -6,4 +6,5 @@ docker build -t modiconme/moex-service:latest MoexService/
 docker build -t modiconme/user-service:latest UserService/
 docker build -t modiconme/stock-cache-service:latest StockCacheService/
 docker build -t modiconme/cbr-service:latest CbrService/
+docker build -t modiconme/openfigi-service:latest OpenFigiService/
 

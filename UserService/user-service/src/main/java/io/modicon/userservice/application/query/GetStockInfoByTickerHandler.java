@@ -5,6 +5,7 @@ import io.modicon.openfigiservice.api.dto.FoundedStockDto;
 import io.modicon.openfigiservice.api.dto.SearchStockDto;
 import io.modicon.openfigiservice.api.query.GetStockByTickerAndCode;
 import io.modicon.priceservice.api.query.GetStocksInfoFromRedis;
+import io.modicon.priceservice.api.query.PutStocksInfoToRedis;
 import io.modicon.userservice.application.client.OpenFigiServiceClient;
 import io.modicon.userservice.application.client.StockInfoServiceClient;
 import io.modicon.userservice.query.GetStockInfoByTicker;
@@ -56,6 +57,7 @@ public class GetStockInfoByTickerHandler implements QueryHandler<GetStockInfoByT
             else
                 throw exception(HttpStatus.NOT_FOUND, "ticker not found", tickers);
 
+            stockInfoServiceClient.putStockInfoToCache(new PutStocksInfoToRedis(stocksFromOpenFigi));
             result.addAll(stocksFromOpenFigi);
             Set<String> tickersFromOpenFigi = stocksFromOpenFigi.stream()
                     .map(FoundedStockDto::ticker).collect(Collectors.toSet());

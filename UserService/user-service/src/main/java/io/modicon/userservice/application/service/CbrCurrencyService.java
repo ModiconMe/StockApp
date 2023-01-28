@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -19,10 +20,16 @@ public class CbrCurrencyService implements CurrencyService {
 
     @Override
     public Map<Currency, BigDecimal> getCurrencyCost() {
-        Map<Currency, BigDecimal> rates = currencyServiceClient.getCurrentCurrencyRate().getCurrencyRates()
-                .stream().collect(Collectors.toMap(c -> Currency.valueOf(c.ticker()), CurrencyRateDto::rate));
-        rates.put(Currency.RUB, BigDecimal.valueOf(1));
-        return rates;
+        Map<String, BigDecimal> allCurrencyRates = currencyServiceClient.getCurrentCurrencyRate().getCurrencyRates()
+                .stream().collect(Collectors.toMap(CurrencyRateDto::ticker, CurrencyRateDto::rate));
+
+        Map<Currency, BigDecimal> appCurrencyRates = new HashMap<>();
+        Currency[] values = Currency.values();
+        for (Currency c : values) {
+            appCurrencyRates.put(c, allCurrencyRates.get(c.getCurrency()));
+        }
+        appCurrencyRates.put(Currency.RUB, BigDecimal.valueOf(1));
+        return appCurrencyRates;
     }
 
     public Set<CurrencyRateDto> getCurrentCurrencyRates() {

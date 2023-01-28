@@ -2,7 +2,6 @@ package io.modicon.cbrservice.application.query;
 
 import io.modicon.cbrservice.api.query.GetCurrencyRateDaySpecified;
 import io.modicon.cbrservice.application.service.CbrCurrencyService;
-import io.modicon.cbrservice.application.service.DateFormatService;
 import io.modicon.cbrservice.model.CurrencyRate;
 import io.modicon.stockservice.api.dto.CurrencyRateDto;
 import org.junit.jupiter.api.BeforeEach;

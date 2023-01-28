@@ -6,7 +6,6 @@ import io.modicon.cbrservice.application.service.CbrCurrencyService;
 import io.modicon.cqrsbus.QueryHandler;
 import io.modicon.stockservice.api.dto.CurrencyRateDto;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;

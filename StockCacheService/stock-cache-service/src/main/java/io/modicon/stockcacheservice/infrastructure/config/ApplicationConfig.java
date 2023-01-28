@@ -14,7 +14,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @RequiredArgsConstructor
 @Configuration
-@EnableFeignClients(basePackages = "io.modicon.priceservice.application.client")
+@EnableFeignClients(basePackages = "io.modicon.stockcacheservice.application.client")
 @EnableScheduling
 public class ApplicationConfig {
 

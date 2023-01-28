@@ -28,3 +28,7 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
     show-sql: true
+
+logging:
+  level:
+    io.modicon.userservice.application.client: debug

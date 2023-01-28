@@ -4,6 +4,7 @@ import io.modicon.stockservice.api.dto.CurrencyDto;
 import io.modicon.stockservice.api.dto.StockDto;
 import io.modicon.stockservice.api.query.GetStocksResult;
 import io.modicon.userservice.application.client.StockServiceClient;
+import io.modicon.userservice.application.service.TickerFigiConverterService;
 import io.modicon.userservice.command.AddStockToUser;
 import io.modicon.userservice.command.AddStockToUserResult;
 import io.modicon.userservice.domain.model.PositionEntity;
@@ -19,6 +20,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -34,12 +36,14 @@ class AddStockToUserHandlerTest {
     private StockRepository stockRepository;
     @Mock
     private StockServiceClient stockServiceClient;
+    @Mock
+    private TickerFigiConverterService tickerFigiConverterService;
 
     private AddStockToUserHandler addStockToUserHandler;
 
     @BeforeEach
     void setUp() {
-        addStockToUserHandler = new AddStockToUserHandler(userRepository, stockRepository, stockServiceClient);
+        addStockToUserHandler = new AddStockToUserHandler(userRepository, stockRepository, stockServiceClient, tickerFigiConverterService);
     }
 
     private Set<PositionEntity> userPositions = new HashSet<>();
@@ -48,12 +52,14 @@ class AddStockToUserHandlerTest {
     private PositionEntity userPosition2 = new PositionEntity("figi2", 2);
     private PositionEntity userPosition3 = new PositionEntity("figi3", 3);
 
-    private Set<PositionDto> validPositionsToAdd = new HashSet<>();
-    private Set<PositionDto> invalidPositionsToAdd = new HashSet<>();
+    private Set<PositionDto> validPositionsDtoToAdd = new HashSet<>();
+    private Set<PositionDto> invalidPositionsDtoToAdd = new HashSet<>();
     private PositionDto positionToAdd1 = new PositionDto("figi4", 4);
     private PositionDto positionToAdd2 = new PositionDto("figi5", 5);
     private PositionDto positionToAdd3 = new PositionDto("figi6", 6);
     private PositionDto positionToAdd4 = new PositionDto("figi7", 7);
+    private Set<PositionEntity> validPositionsToAdd;
+    private Set<PositionEntity> invalidPositionsToAdd;
 
     private List<StockDto> stockDtos = new ArrayList<>();
     private StockDto stockDto1 = new StockDto("figi4", "figi4", "name", "share", CurrencyDto.EUR, "TINKOFF");
@@ -66,18 +72,19 @@ class AddStockToUserHandlerTest {
     private PositionDto userPositionDto3 = new PositionDto("figi3", 3);
     private Set<PositionDto> resultSet1 = new HashSet<>();
     private Set<PositionDto> resultSet2 = new HashSet<>();
+
     {
         userPositions.add(userPosition1);
         userPositions.add(userPosition2);
         userPositions.add(userPosition3);
 
-        validPositionsToAdd.add(positionToAdd1);
-        validPositionsToAdd.add(positionToAdd2);
-        validPositionsToAdd.add(positionToAdd3);
-        validPositionsToAdd.add(positionToAdd4);
+        validPositionsDtoToAdd.add(positionToAdd1);
+        validPositionsDtoToAdd.add(positionToAdd2);
+        validPositionsDtoToAdd.add(positionToAdd3);
+        validPositionsDtoToAdd.add(positionToAdd4);
 
-        invalidPositionsToAdd.add(positionToAdd1);
-        invalidPositionsToAdd.add(userPositionDto3);
+        invalidPositionsDtoToAdd.add(positionToAdd1);
+        invalidPositionsDtoToAdd.add(userPositionDto3);
 
         stockDtos.add(stockDto1);
         stockDtos.add(stockDto2);
@@ -98,6 +105,9 @@ class AddStockToUserHandlerTest {
         resultSet2.add(positionToAdd2);
         resultSet2.add(positionToAdd3);
         resultSet2.add(positionToAdd4);
+
+        validPositionsToAdd = validPositionsDtoToAdd.stream().map(p -> new PositionEntity(p.figi(), p.quantity())).collect(Collectors.toSet());
+        invalidPositionsToAdd = invalidPositionsDtoToAdd.stream().map(p -> new PositionEntity(p.figi(), p.quantity())).collect(Collectors.toSet());
     }
 
     @Test
@@ -106,8 +116,9 @@ class AddStockToUserHandlerTest {
         when(stockRepository.existsByFigi(anyString())).thenReturn(false);
         when(stockServiceClient.getStocks(any()))
                 .thenReturn(new GetStocksResult(stockDtos, new HashSet<>()));
-
-        AddStockToUserResult result = addStockToUserHandler.handle(new AddStockToUser(user.getId(), validPositionsToAdd));
+        when(tickerFigiConverterService.getFigisFromTickers(validPositionsToAdd)).thenReturn(new ArrayList<>(validPositionsToAdd));
+;
+        AddStockToUserResult result = addStockToUserHandler.handle(new AddStockToUser(user.getId(), validPositionsDtoToAdd));
 
         assertThat(result.getNotFoundFigis()).isEmpty();
         assertThat(result.getUser().stocks()).isNotEmpty();
@@ -119,8 +130,9 @@ class AddStockToUserHandlerTest {
     void should_returnCorrectData_whenAllExistInDb() {
         when(userRepository.findById(anyString())).thenReturn(Optional.of(user));
         when(stockRepository.existsByFigi(anyString())).thenReturn(true);
+        when(tickerFigiConverterService.getFigisFromTickers(validPositionsToAdd)).thenReturn(new ArrayList<>(validPositionsToAdd));
 
-        AddStockToUserResult result = addStockToUserHandler.handle(new AddStockToUser(user.getId(), validPositionsToAdd));
+        AddStockToUserResult result = addStockToUserHandler.handle(new AddStockToUser(user.getId(), validPositionsDtoToAdd));
 
         assertThat(result.getNotFoundFigis()).isEmpty();
         assertThat(result.getUser().stocks()).isNotEmpty();
@@ -132,13 +144,14 @@ class AddStockToUserHandlerTest {
     void should_returnCorrectData_whenStocksNotFound() {
         when(userRepository.findById(anyString())).thenReturn(Optional.of(user));
         when(stockRepository.existsByFigi(anyString())).thenReturn(false);
+        when(tickerFigiConverterService.getFigisFromTickers(validPositionsToAdd)).thenReturn(new ArrayList<>(validPositionsToAdd));
         HashSet<String> notFoundFigis = new HashSet<>();
         String notFoundFigi = "figi4";
         notFoundFigis.add(notFoundFigi);
         when(stockServiceClient.getStocks(any()))
                 .thenReturn(new GetStocksResult(stockDtos, notFoundFigis));
 
-        AddStockToUserResult result = addStockToUserHandler.handle(new AddStockToUser(user.getId(), validPositionsToAdd));
+        AddStockToUserResult result = addStockToUserHandler.handle(new AddStockToUser(user.getId(), validPositionsDtoToAdd));
 
         assertThat(result.getNotFoundFigis()).isNotEmpty();
         assertThat(result.getNotFoundFigis().contains(notFoundFigi)).isTrue();
@@ -151,8 +164,9 @@ class AddStockToUserHandlerTest {
     @Test
     void should_throw_whenPositionAlreadyExist() {
         when(userRepository.findById(anyString())).thenReturn(Optional.of(user));
+        when(tickerFigiConverterService.getFigisFromTickers(invalidPositionsToAdd)).thenReturn(new ArrayList<>(invalidPositionsToAdd));
 
-        assertThatThrownBy(() -> addStockToUserHandler.handle(new AddStockToUser(user.getId(), invalidPositionsToAdd)))
+        assertThatThrownBy(() -> addStockToUserHandler.handle(new AddStockToUser(user.getId(), invalidPositionsDtoToAdd)))
                 .isInstanceOf(ApiException.class);
     }
 

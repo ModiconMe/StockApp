@@ -23,7 +23,7 @@ class DateFormatServiceTest {
 
     @Test
     void should_correctParseDate_whenValidDateProvided() {
-        String date = "20/02/2010";
+        String date = "20.02.2010";
         String expected = "20.02.2010";
         String formatDate = dateFormatService.formatDate(date);
         System.out.println(formatDate);
@@ -33,6 +33,13 @@ class DateFormatServiceTest {
     @Test
     void should_throw_whenProvidedDateInvalid() {
         String date = "10.24.2010";
+        ApiException exception = catchThrowableOfType(() -> dateFormatService.formatDate(date), ApiException.class);
+        Assertions.assertThat(exception.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    void should_throw_whenProvidedDateIsBefore01011997() {
+        String date = "31.12.1996";
         ApiException exception = catchThrowableOfType(() -> dateFormatService.formatDate(date), ApiException.class);
         Assertions.assertThat(exception.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
     }

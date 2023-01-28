@@ -12,7 +12,7 @@ import static io.modicon.userservice.infrastructure.exception.ApiException.excep
 public class CbrDateFormatService implements DateFormatService {
 
     private final String PATTERN = "dd.MM.yyyy";
-    private final String SEPARATORS = "\\.|_|-";
+    private final String SEPARATORS = "\\.|_|-|/";
     private final String VALID_SEPARATOR = ".";
 
     @Override

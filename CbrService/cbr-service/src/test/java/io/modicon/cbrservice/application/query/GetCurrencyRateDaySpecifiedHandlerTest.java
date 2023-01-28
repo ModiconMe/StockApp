@@ -21,13 +21,11 @@ class GetCurrencyRateDaySpecifiedHandlerTest {
 
     @Mock
     private CbrCurrencyService cbrCurrencyService;
-    @Mock
-    private DateFormatService dateFormatService;
     private GetCurrencyRateDaySpecifiedHandler getCurrencyRateDaySpecifiedHandler;
 
     @BeforeEach
     void setUp() {
-        getCurrencyRateDaySpecifiedHandler = new GetCurrencyRateDaySpecifiedHandler(cbrCurrencyService, dateFormatService);
+        getCurrencyRateDaySpecifiedHandler = new GetCurrencyRateDaySpecifiedHandler(cbrCurrencyService);
     }
 
     Set<CurrencyRate> currencyRates = Set.of(
@@ -45,9 +43,8 @@ class GetCurrencyRateDaySpecifiedHandlerTest {
 
     @Test
     void should_getCurrencyDaySpecified_whenProvidedDateValid() {
-        String date = "20.10.2002";
+        String date = "20/10/2002";
         when(cbrCurrencyService.getCurrencyRatesDaySpecified(date)).thenReturn(currencyRates);
-        when(dateFormatService.formatDate(date)).thenReturn(date);
         Set<CurrencyRateDto> result = getCurrencyRateDaySpecifiedHandler.handle(new GetCurrencyRateDaySpecified(date)).getCurrencyRates();
         assertThat(result).isNotEmpty();
         assertThat(result.size()).isEqualTo(currencyRatesDto.size());

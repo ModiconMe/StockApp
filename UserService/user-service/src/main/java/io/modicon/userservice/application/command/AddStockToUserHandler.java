@@ -7,6 +7,7 @@ import io.modicon.userservice.application.PositionMapper;
 import io.modicon.userservice.application.StockMapper;
 import io.modicon.userservice.application.UserMapper;
 import io.modicon.userservice.application.client.StockServiceClient;
+import io.modicon.userservice.application.service.TickerFigiConverterService;
 import io.modicon.userservice.command.AddStockToUser;
 import io.modicon.userservice.command.AddStockToUserResult;
 import io.modicon.userservice.domain.model.PositionEntity;
@@ -34,6 +35,7 @@ public class AddStockToUserHandler implements CommandHandler<AddStockToUserResul
     private final UserRepository userRepository;
     private final StockRepository stockRepository;
     private final StockServiceClient stockServiceClient;
+    private final TickerFigiConverterService tickerFigiConverterService;
 
     @Transactional
     @Override
@@ -46,27 +48,30 @@ public class AddStockToUserHandler implements CommandHandler<AddStockToUserResul
                 .map(PositionMapper::mapToEntity)
                 .filter(position -> position.getQuantity() > 0).collect(Collectors.toSet());
 
+        List<PositionEntity> tickerReplacedToFigiPositions = tickerFigiConverterService
+                .getFigisFromTickers(requestPositions);
+
         // check that user has this figis
-        requestPositions.forEach(p -> {
+        tickerReplacedToFigiPositions.forEach(p -> {
             p.setFigi(p.getFigi().trim());
             if (userPositions.contains(p))
                 throw exception(HttpStatus.BAD_REQUEST, "you already has stock with that figi: %s", p.getFigi());
         });
 
-        requestPositions.removeAll(userPositions); // remove if figi is equal
+        tickerReplacedToFigiPositions.removeAll(userPositions); // remove if figi is equal
 
         // check stock in database
-        requestPositions.forEach(position -> {
+        tickerReplacedToFigiPositions.forEach(position -> {
             if (stockRepository.existsByFigi(position.getFigi())) {
                 userPositions.add(position);
             }
         });
-        requestPositions.removeAll(userPositions);
+        tickerReplacedToFigiPositions.removeAll(userPositions);
 
         // go to StockService
-        List<String> figis = requestPositions.stream().map(PositionEntity::getFigi).toList();
+        List<String> figis = tickerReplacedToFigiPositions.stream().map(PositionEntity::getFigi).toList();
         Set<String> notFoundFigis = new HashSet<>();
-        if (!requestPositions.isEmpty()) {
+        if (!tickerReplacedToFigiPositions.isEmpty()) {
             GetStocksResult stockFromService = stockServiceClient.getStocks(new GetStocks(figis));
             List<StockEntity> stocks = stockFromService.getStocks()
                     .stream().map(StockMapper::mapToEntity).toList();
@@ -76,16 +81,16 @@ public class AddStockToUserHandler implements CommandHandler<AddStockToUserResul
             notFoundFigis = stockFromService.getNotFoundFigis();
 
             Set<PositionEntity> positionNotFound = new HashSet<>();
-            for (PositionEntity position : requestPositions) {
+            for (PositionEntity position : tickerReplacedToFigiPositions) {
                 if (notFoundFigis.contains(position.getFigi())) {
                     positionNotFound.add(position);
                 }
             }
-            requestPositions.removeAll(positionNotFound);
+            tickerReplacedToFigiPositions.removeAll(positionNotFound);
         }
 
         // add to stock to user
-        userPositions.addAll(requestPositions);
+        userPositions.addAll(tickerReplacedToFigiPositions);
         user.setStocks(userPositions);
         userRepository.save(user);
 

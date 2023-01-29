@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static io.modicon.openfigiservice.infrastructure.exception.ApiException.exception;
@@ -29,18 +30,23 @@ public class OpenFigiStockService {
         log.info("get ticker from open figi {}", request);
 
         List<GetTickerResponse> stockByTicker = openFigiClient.getStockByTicker(request);
+        List<FoundedStockDto> result = new ArrayList<>();
         if (!stockByTicker.isEmpty()) {
-            GetTickerResponse getTickerResponse = stockByTicker.get(0);
-            log.info("get response from open figi {}", getTickerResponse);
-            if (getTickerResponse.error() != null) {
-                throw exception(HttpStatus.BAD_REQUEST, "error occurred from open figi %s", getTickerResponse.error());
-            }
-            if (getTickerResponse.data() != null) {
-                return getTickerResponse.data().stream().map(StockMapper::mapToDto).toList();
+            log.info("get response from open figi {}", stockByTicker);
+            for (GetTickerResponse response : stockByTicker) {
+                if (response.error() != null) {
+                    log.warn("open figi response error: " + response.error());
+                }
+                if (response.data() != null) {
+                    result.add(StockMapper.mapToDto(response.data().get(0)));
+                }
             }
         }
 
-        return null;
+        if (result.isEmpty())
+            return null;
+
+        return result;
     }
 
     public List<FoundedStockDto> searchStockByTicker(SearchTickerRequest request) {

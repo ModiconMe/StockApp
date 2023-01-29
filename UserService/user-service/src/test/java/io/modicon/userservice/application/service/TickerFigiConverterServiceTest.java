@@ -66,10 +66,10 @@ class TickerFigiConverterServiceTest {
 
         foundedStockDtoList.add(foundedStockDto1);
 
-        resultPostionList.add(resultPosition1);
-        resultPostionList.add(resultPosition2);
         resultPostionList.add(resultPosition3);
         resultPostionList.add(resultPosition4);
+        resultPostionList.add(resultPosition1);
+        resultPostionList.add(resultPosition2);
     }
 
     @Test
@@ -78,6 +78,5 @@ class TickerFigiConverterServiceTest {
         List<PositionEntity> figisFromTickers = tickerFigiConverterService.getFigisFromTickers(validPositionsToAdd);
 
         assertThat(figisFromTickers).isEqualTo(resultPostionList);
-
     }
 }

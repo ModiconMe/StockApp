@@ -18,9 +18,16 @@ public class PositionEntity {
         @EqualsAndHashCode.Include
         private String figi;
         private Integer quantity;
+        private String name;
 
         public PositionEntity(String figi, Integer quantity) {
                 this.figi = figi;
                 this.quantity = quantity;
+        }
+
+        public PositionEntity(String figi, Integer quantity, String name) {
+                this.figi = figi;
+                this.quantity = quantity;
+                this.name = name;
         }
 }

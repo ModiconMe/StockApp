@@ -13,7 +13,6 @@ import java.util.Map;
 @Getter
 public class GetClassPercentStatResult {
 
-    private String id;
     private Map<TypeDto, BigDecimal> typePercentPortfolioMap;
 
 }

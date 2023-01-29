@@ -12,5 +12,5 @@ public interface StockSearchOperation {
         GetStockInfoByTickerResult getStockByTicker(@RequestBody GetStockInfoByTicker query);
 
         @PostMapping("/search")
-        SearchStockInfoByTickerResult getCurrencyRateDaySpecified(@RequestBody SearchStockInfoByTicker query);
+        SearchStockInfoByTickerResult searchStocksTicker(@RequestBody SearchStockInfoByTicker query);
 }

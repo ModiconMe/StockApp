@@ -5,10 +5,10 @@ import io.modicon.userservice.dto.PositionDto;
 
 public class PositionMapper {
     public static PositionDto mapToDto(PositionEntity position) {
-        return new PositionDto(position.getFigi(), position.getQuantity());
+        return new PositionDto(position.getFigi(), position.getQuantity(), position.getName());
     }
 
     public static PositionEntity mapToEntity(PositionDto position) {
-        return new PositionEntity(position.figi(), position.quantity());
+        return new PositionEntity(position.figi(), position.quantity(), position.name());
     }
 }

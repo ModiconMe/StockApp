@@ -20,10 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static io.modicon.userservice.infrastructure.exception.ApiException.exception;
@@ -62,9 +59,8 @@ public class AddStockToUserHandler implements CommandHandler<AddStockToUserResul
 
         // check stock in database
         tickerReplacedToFigiPositions.forEach(position -> {
-            if (stockRepository.existsByFigi(position.getFigi())) {
-                userPositions.add(position);
-            }
+            Optional<StockEntity> byFigi = stockRepository.findByFigi(position.getFigi());
+            byFigi.ifPresent(stockEntity -> userPositions.add(new PositionEntity(position.getFigi(), position.getQuantity(), stockEntity.getName())));
         });
         tickerReplacedToFigiPositions.removeAll(userPositions);
 
@@ -78,12 +74,16 @@ public class AddStockToUserHandler implements CommandHandler<AddStockToUserResul
             stocks.forEach(stock -> stock.setId(UUID.randomUUID()));
             stockRepository.saveAll(stocks);
 
+            Map<String, String> figiStockNameMap = stocks.stream().collect(Collectors.toMap(StockEntity::getFigi, StockEntity::getName));
+
             notFoundFigis = stockFromService.getNotFoundFigis();
 
             Set<PositionEntity> positionNotFound = new HashSet<>();
             for (PositionEntity position : tickerReplacedToFigiPositions) {
                 if (notFoundFigis.contains(position.getFigi())) {
                     positionNotFound.add(position);
+                } else {
+                    position.setName(figiStockNameMap.get(position.getFigi()));
                 }
             }
             tickerReplacedToFigiPositions.removeAll(positionNotFound);

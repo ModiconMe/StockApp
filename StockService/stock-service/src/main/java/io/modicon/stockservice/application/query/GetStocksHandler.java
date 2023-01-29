@@ -49,6 +49,7 @@ public class GetStocksHandler implements QueryHandler<GetStocksResult, GetStocks
             resultList.addAll(moexStocks);
         }
 
+        log.info("not found: " + figis);
         return new GetStocksResult(resultList.stream().map(StockMapper::mapToStockDto).toList(), new HashSet<>(figis));
     }
 

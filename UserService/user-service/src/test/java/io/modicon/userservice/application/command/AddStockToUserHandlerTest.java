@@ -48,28 +48,28 @@ class AddStockToUserHandlerTest {
 
     private Set<PositionEntity> userPositions = new HashSet<>();
     private UserEntity user = new UserEntity("1", "name", userPositions);
-    private PositionEntity userPosition1 = new PositionEntity("figi1", 1);
-    private PositionEntity userPosition2 = new PositionEntity("figi2", 2);
-    private PositionEntity userPosition3 = new PositionEntity("figi3", 3);
+    private PositionEntity userPosition1 = new PositionEntity("figi1", 1, "name1");
+    private PositionEntity userPosition2 = new PositionEntity("figi2", 2, "name2");
+    private PositionEntity userPosition3 = new PositionEntity("figi3", 3, "name3");
 
     private Set<PositionDto> validPositionsDtoToAdd = new HashSet<>();
     private Set<PositionDto> invalidPositionsDtoToAdd = new HashSet<>();
-    private PositionDto positionToAdd1 = new PositionDto("figi4", 4);
-    private PositionDto positionToAdd2 = new PositionDto("figi5", 5);
-    private PositionDto positionToAdd3 = new PositionDto("figi6", 6);
-    private PositionDto positionToAdd4 = new PositionDto("figi7", 7);
+    private PositionDto positionToAdd1 = new PositionDto("figi4", 4, "name4");
+    private PositionDto positionToAdd2 = new PositionDto("figi5", 5, "name5");
+    private PositionDto positionToAdd3 = new PositionDto("figi6", 6, "name6");
+    private PositionDto positionToAdd4 = new PositionDto("figi7", 7, "name7");
     private Set<PositionEntity> validPositionsToAdd;
     private Set<PositionEntity> invalidPositionsToAdd;
 
     private List<StockDto> stockDtos = new ArrayList<>();
-    private StockDto stockDto1 = new StockDto("figi4", "figi4", "name", "share", CurrencyDto.EUR, "TINKOFF");
-    private StockDto stockDto2 = new StockDto("figi5", "figi5", "name", "share", CurrencyDto.EUR, "TINKOFF");
-    private StockDto stockDto3 = new StockDto("figi6", "figi6", "name", "share", CurrencyDto.EUR, "TINKOFF");
-    private StockDto stockDto4 = new StockDto("figi7", "figi7", "name", "share", CurrencyDto.EUR, "TINKOFF");
+    private StockDto stockDto1 = new StockDto("figi4", "figi4", "name4", "share", CurrencyDto.EUR, "TINKOFF");
+    private StockDto stockDto2 = new StockDto("figi5", "figi5", "name5", "share", CurrencyDto.EUR, "TINKOFF");
+    private StockDto stockDto3 = new StockDto("figi6", "figi6", "name6", "share", CurrencyDto.EUR, "TINKOFF");
+    private StockDto stockDto4 = new StockDto("figi7", "figi7", "name7", "share", CurrencyDto.EUR, "TINKOFF");
 
-    private PositionDto userPositionDto1 = new PositionDto("figi1", 1);
-    private PositionDto userPositionDto2 = new PositionDto("figi2", 2);
-    private PositionDto userPositionDto3 = new PositionDto("figi3", 3);
+    private PositionDto userPositionDto1 = new PositionDto("figi1", 1, "name1");
+    private PositionDto userPositionDto2 = new PositionDto("figi2", 2, "name2");
+    private PositionDto userPositionDto3 = new PositionDto("figi3", 3, "name3");
     private Set<PositionDto> resultSet1 = new HashSet<>();
     private Set<PositionDto> resultSet2 = new HashSet<>();
 
@@ -106,14 +106,13 @@ class AddStockToUserHandlerTest {
         resultSet2.add(positionToAdd3);
         resultSet2.add(positionToAdd4);
 
-        validPositionsToAdd = validPositionsDtoToAdd.stream().map(p -> new PositionEntity(p.figi(), p.quantity())).collect(Collectors.toSet());
-        invalidPositionsToAdd = invalidPositionsDtoToAdd.stream().map(p -> new PositionEntity(p.figi(), p.quantity())).collect(Collectors.toSet());
+        validPositionsToAdd = validPositionsDtoToAdd.stream().map(p -> new PositionEntity(p.figi(), p.quantity(), p.name())).collect(Collectors.toSet());
+        invalidPositionsToAdd = invalidPositionsDtoToAdd.stream().map(p -> new PositionEntity(p.figi(), p.quantity(), p.name())).collect(Collectors.toSet());
     }
 
     @Test
     void should_returnCorrectData() {
         when(userRepository.findById(anyString())).thenReturn(Optional.of(user));
-        when(stockRepository.existsByFigi(anyString())).thenReturn(false);
         when(stockServiceClient.getStocks(any()))
                 .thenReturn(new GetStocksResult(stockDtos, new HashSet<>()));
         when(tickerFigiConverterService.getFigisFromTickers(validPositionsToAdd)).thenReturn(new ArrayList<>(validPositionsToAdd));

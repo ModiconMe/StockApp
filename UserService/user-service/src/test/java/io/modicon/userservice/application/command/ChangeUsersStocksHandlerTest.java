@@ -36,26 +36,26 @@ class ChangeUsersStocksHandlerTest {
 
     private Set<PositionEntity> userPositions = new HashSet<>();
     private UserEntity user = new UserEntity("1", "name", userPositions);
-    private PositionEntity userPosition1 = new PositionEntity("figi1", 1);
-    private PositionEntity userPosition2 = new PositionEntity("figi2", 2);
-    private PositionEntity userPosition3 = new PositionEntity("figi3", 3);
-    private PositionDto newUserPosition1 = new PositionDto("figi1", 25);
-    private PositionDto notExistedUserPosition = new PositionDto("figi4", 25);
+    private PositionEntity userPosition1 = new PositionEntity("figi1", 1, "name1");
+    private PositionEntity userPosition2 = new PositionEntity("figi2", 2, "name2");
+    private PositionEntity userPosition3 = new PositionEntity("figi3", 3, "name3");
+    private PositionDto newUserPosition1 = new PositionDto("figi1", 25, "name1");
+    private PositionDto notExistedUserPosition = new PositionDto("figi4", 25, "name4");
 
     private Set<PositionDto> oldUserPositions = new HashSet<>();
-    private PositionDto oldUserPosition1 = new PositionDto("figi1", 1);
-    private PositionDto oldUserPosition2 = new PositionDto("figi2", 2);
-    private PositionDto oldUserPosition3 = new PositionDto("figi3", 3);
+    private PositionDto oldUserPosition1 = new PositionDto("figi1", 1, "name1");
+    private PositionDto oldUserPosition2 = new PositionDto("figi2", 2, "name2");
+    private PositionDto oldUserPosition3 = new PositionDto("figi3", 3, "name3");
 
     private Set<PositionDto> newUserPositions = new HashSet<>();
-    private PositionDto newPositionDto1 = new PositionDto("figi1", 25);
-    private PositionDto newPositionDto2 = new PositionDto("figi2", 2);
-    private PositionDto newPositionDto3 = new PositionDto("figi3", 3);
+    private PositionDto newPositionDto1 = new PositionDto("figi1", 25, "name1");
+    private PositionDto newPositionDto2 = new PositionDto("figi2", 2, "name2");
+    private PositionDto newPositionDto3 = new PositionDto("figi3", 3, "name3");
 
     private Set<PositionDto> newUserPositionsWhenDeletedZero = new HashSet<>();
-    private PositionDto newUserPositionsWhenDeletedZero1 = new PositionDto("figi1", 1);
-    private PositionDto newUserPositionsWhenDeletedZero2 = new PositionDto("figi3", 3);
-    private PositionDto positionToDelete = new PositionDto("figi2", 0);
+    private PositionDto newUserPositionsWhenDeletedZero1 = new PositionDto("figi1", 1, "name1");
+    private PositionDto newUserPositionsWhenDeletedZero2 = new PositionDto("figi3", 3, "name3");
+    private PositionDto positionToDelete = new PositionDto("figi2", 0, "name2");
 
     {
         userPositions.add(userPosition1);

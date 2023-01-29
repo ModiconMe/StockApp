@@ -51,4 +51,5 @@ include 'OpenFigiService:openfigi-service'
 include 'OpenFigiService:openfigi-service-api'
 findProject(':OpenFigiService:openfigi-service')?.name = 'openfigi-service'
 findProject(':OpenFigiService:openfigi-service-api')?.name = 'openfigi-service-api'
+include 'TelegramBot'
 

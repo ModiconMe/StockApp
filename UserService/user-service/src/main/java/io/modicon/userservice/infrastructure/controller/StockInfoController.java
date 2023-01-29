@@ -23,7 +23,7 @@ public class StockInfoController implements StockSearchOperation {
     }
 
     @Override
-    public SearchStockInfoByTickerResult getCurrencyRateDaySpecified(SearchStockInfoByTicker query) {
+    public SearchStockInfoByTickerResult searchStocksTicker(SearchStockInfoByTicker query) {
         return bus.executeQuery(query);
     }
 }

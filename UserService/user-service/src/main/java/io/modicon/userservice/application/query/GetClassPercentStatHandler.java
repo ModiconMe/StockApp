@@ -73,6 +73,6 @@ public class GetClassPercentStatHandler implements QueryHandler<GetClassPercentS
         Map<TypeDto, BigDecimal> result = typeCostMap.entrySet().stream()
                 .collect(Collectors.toMap(entry -> TypeDto.valueOf(entry.getKey().getValue().toUpperCase()), entry -> entry.getValue().multiply(BigDecimal.valueOf(100)).divide(totalCostRes, 1, RoundingMode.HALF_UP)));
 
-        return new GetClassPercentStatResult(user.getId(), result);
+        return new GetClassPercentStatResult(result);
     }
 }

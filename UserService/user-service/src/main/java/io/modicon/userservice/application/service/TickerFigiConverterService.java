@@ -29,7 +29,7 @@ public class TickerFigiConverterService {
         Map<String, String> figiTickerMap;
 
         List<PositionEntity> tickerReplacedToFigiPositions = new ArrayList<>();
-        if (foundedStock != null) {
+        if (!foundedStock.isEmpty()) {
             figiTickerMap = foundedStock.stream().collect(Collectors.toMap(FoundedStockDto::ticker, FoundedStockDto::figi));
             for (PositionEntity position : requestedByTickerPositions) {
                 String figi = figiTickerMap.get(position.getFigi());

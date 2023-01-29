@@ -48,7 +48,7 @@ public class SearchStockInfoByTickerHandler implements QueryHandler<SearchStockI
             var response = openFigiServiceClient
                     .searchStock(new SearchStockByTickerAndCode(stock)).getStocks();
 
-            if (response != null)
+            if (!response.isEmpty())
                 stocksFromOpenFigi = new ArrayList<>(response);
             else
                 throw exception(HttpStatus.NOT_FOUND, "ticker not found", stock);
@@ -60,6 +60,6 @@ public class SearchStockInfoByTickerHandler implements QueryHandler<SearchStockI
             }
         }
 
-        throw exception(HttpStatus.NOT_FOUND, "stock with ticker %s not found", stock.ticker());
+        throw exception(HttpStatus.NOT_FOUND, "stock not found");
     }
 }

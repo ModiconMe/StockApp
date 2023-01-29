@@ -1,6 +1,5 @@
 package io.modicon.openfigiservice.application.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.modicon.openfigiservice.api.dto.FoundedStockDto;
 import io.modicon.openfigiservice.application.StockMapper;
 import io.modicon.openfigiservice.application.client.OpenFigiClient;
@@ -10,13 +9,10 @@ import io.modicon.openfigiservice.application.client.openfigi.SearchTickerReques
 import io.modicon.openfigiservice.application.client.openfigi.SearchTickerResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static io.modicon.openfigiservice.infrastructure.exception.ApiException.exception;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -24,7 +20,6 @@ import static io.modicon.openfigiservice.infrastructure.exception.ApiException.e
 public class OpenFigiStockService {
 
     private final OpenFigiClient openFigiClient;
-    private final ObjectMapper objectMapper;
 
     public List<FoundedStockDto> getStockByTicker(List<GetTickerRequest> request) {
         log.info("get ticker from open figi {}", request);
@@ -43,9 +38,6 @@ public class OpenFigiStockService {
             }
         }
 
-        if (result.isEmpty())
-            return null;
-
         return result;
     }
 
@@ -54,14 +46,15 @@ public class OpenFigiStockService {
 
         SearchTickerResponse searchTickerResponse = openFigiClient.searchStockByTicker(request);
         log.info("get response from open figi {}", searchTickerResponse);
+        List<FoundedStockDto> result = new ArrayList<>();
         if (searchTickerResponse.error() != null) {
-            throw exception(HttpStatus.BAD_REQUEST, "error occurred from open figi %s", searchTickerResponse.error());
+            log.warn("open figi search response error: " + searchTickerResponse.error());
         }
         if (searchTickerResponse.data() != null) {
-            return searchTickerResponse.data().stream().map(StockMapper::mapToDto).toList();
+            result = searchTickerResponse.data().stream().map(StockMapper::mapToDto).toList();
         }
 
-        return null;
+        return result;
     }
 
 }

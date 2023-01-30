@@ -28,4 +28,5 @@ public class StockController implements TinkoffServiceOperation {
     public GetTinkoffStockPricesResult getPrices(GetTinkoffStockPrices query) {
         return bus.executeQuery(query);
     }
+
 }

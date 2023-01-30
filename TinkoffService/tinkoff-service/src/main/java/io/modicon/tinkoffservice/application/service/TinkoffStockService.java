@@ -22,6 +22,12 @@ public class TinkoffStockService implements StockService {
     }
 
     @Async
+    public CompletableFuture<Instrument> getMarketInstrumentByTicker(String ticker) {
+        var instrumentsService = investApi.getInstrumentsService();
+        return instrumentsService.getInstrumentByTicker(ticker, "RX");
+    }
+
+    @Async
     public CompletableFuture<GetOrderBookResponse> getOrderBookByFigi(String figi) {
         return investApi.getMarketDataService().getOrderBook(figi, 1);
     }

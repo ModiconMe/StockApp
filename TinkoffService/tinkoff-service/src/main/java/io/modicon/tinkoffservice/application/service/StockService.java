@@ -8,5 +8,7 @@ import java.util.concurrent.CompletableFuture;
 public interface StockService {
     CompletableFuture<Instrument> getMarketInstrumentByFigi(String figi);
 
+    CompletableFuture<Instrument> getMarketInstrumentByTicker(String ticker);
+
     CompletableFuture<GetOrderBookResponse> getOrderBookByFigi(String figi);
 }

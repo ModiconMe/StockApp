@@ -89,6 +89,22 @@ services:
       - postgres
     restart: always
 
+  telegram-bot:
+    image: modiconme/telegram-bot:latest
+    container_name: telegram-bot
+    ports:
+      - "80:8081"
+    networks:
+      - stock-app-network
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - "botName=${botName}"
+      - "botToken=${botToken}"
+      - "botOwner=${botOwner}"
+    depends_on:
+      - user-service
+    restart: always
+
   redis:
     image: redis:alpine
     container_name: redis

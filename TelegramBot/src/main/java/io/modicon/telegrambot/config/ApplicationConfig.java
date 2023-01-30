@@ -1,6 +1,6 @@
 package io.modicon.telegrambot.config;
 
-import feign.codec.ErrorDecoder;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -21,7 +21,7 @@ public class ApplicationConfig {
     private Long botOwner;
 
     @Bean
-    public ErrorDecoder errorDecoder() {
-        return new TelegramBotExceptionDecoder();
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper();
     }
 }

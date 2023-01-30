@@ -9,11 +9,11 @@ public enum BotCommandEnum {
     START("/start"),
     HELP("/help"),
     ADD_STOCK("/addstock"),
+    GET_PORTFOLIO_INFO("/portfolioinfo"),
     UPDATE_STOCK("/updatestock"),
     DELETE_STOCK("/deletestock"),
-    CURRENCIES_RATES("/currenciesrates"),
-    GET_PORTFOLIO_INFO("/portfolioinfo"),
-    FIND_STOCK_BY_TICKER("/findstockbyticker");
+    CURRENCIES_RATES("/currency"),
+    FIND_STOCK_BY_TICKER("/findstock");
 
     private final String commandId;
 

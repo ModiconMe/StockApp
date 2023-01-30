@@ -9,6 +9,6 @@ api :
     stockSearchOperations: localhost:8080/api/stocks/
 
 telegram:
-  bot-name: StocksBot
-  api-key: 6126378813:AAE3K10-WLaKOz8pzG-Nkl5ibx0g6gUzf0k
-  bot-owner: 908653889
+  bot-name: ${botName}
+  api-key: ${botToken}
+  bot-owner: ${botOwner}

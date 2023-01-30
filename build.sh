@@ -7,6 +7,7 @@ docker build -t modiconme/user-service:latest UserService/
 docker build -t modiconme/stock-cache-service:latest StockCacheService/
 docker build -t modiconme/cbr-service:latest CbrService/
 docker build -t modiconme/openfigi-service:latest OpenFigiService/
+docker build -t modiconme/telegram-bot:latest TelegramBot/
 docker login -u $1 -p $2
 docker push modiconme/stock-service:latest
 docker push modiconme/tinkoff-service:latest
@@ -15,4 +16,5 @@ docker push modiconme/user-service:latest
 docker push modiconme/stock-cache-service:latest
 docker push modiconme/cbr-service:latest
 docker push modiconme/openfigi-service:latest
+docker push modiconme/telegram-bot:latest
 

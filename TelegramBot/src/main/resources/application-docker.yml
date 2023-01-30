@@ -1,0 +1,14 @@
+server:
+  port: 8081
+
+api :
+  userService:
+    userOperations: user-service:8080/api/users/
+    portfolioStatOperations: user-service:8080/api/statistic/
+    currencyOperations: user-service:8080/api/currency/
+    stockSearchOperations: user-service:8080/api/stocks/
+
+telegram:
+  bot-name: ${botName}
+  api-key: ${botToken}
+  bot-owner: ${botOwner}

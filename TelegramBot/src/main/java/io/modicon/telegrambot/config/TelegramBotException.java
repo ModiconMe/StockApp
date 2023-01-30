@@ -1,7 +1,14 @@
 package io.modicon.telegrambot.config;
 
-public class TelegramBotException extends RuntimeException {
-    public TelegramBotException(String message) {
-        super(message);
-    }
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+public class TelegramBotException {
+    private String message;
 }

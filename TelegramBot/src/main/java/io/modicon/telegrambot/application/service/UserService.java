@@ -1,8 +1,8 @@
 package io.modicon.telegrambot.application.service;
 
+import feign.FeignException;
 import io.modicon.telegrambot.application.client.StatOperationsClient;
 import io.modicon.telegrambot.application.client.UserOperationsClient;
-import io.modicon.telegrambot.config.TelegramBotException;
 import io.modicon.telegrambot.model.PortfolioStatUtils;
 import io.modicon.userservice.command.*;
 import io.modicon.userservice.dto.TypeDto;
@@ -23,7 +23,7 @@ public class UserService {
     public UserDto registerUser(CreateUser user) {
         try {
             return userOperationsClient.getUserById(user.getId()).getUser();
-        } catch (TelegramBotException e) {
+        } catch (FeignException e) {
             return userOperationsClient.createUser(user).getUser();
         }
     }

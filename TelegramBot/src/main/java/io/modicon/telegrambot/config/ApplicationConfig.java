@@ -3,13 +3,11 @@ package io.modicon.telegrambot.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConfigurationProperties("application.yml")
 @EnableFeignClients(basePackages = "io.modicon.telegrambot.application.client")
 @Getter
 public class ApplicationConfig {
@@ -24,4 +22,5 @@ public class ApplicationConfig {
     public ObjectMapper objectMapper() {
         return new ObjectMapper();
     }
+
 }

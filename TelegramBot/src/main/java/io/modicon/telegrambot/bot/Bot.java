@@ -60,6 +60,8 @@ public final class Bot extends TelegramLongPollingBot {
         this.currencyService = currencyService;
         this.stockSearchService = stockSearchService;
         this.objectMapper = objectMapper;
+        System.out.println(getBotUsername());
+        System.out.println(getBotToken());
     }
 
     @Override

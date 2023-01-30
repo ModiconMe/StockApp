@@ -26,7 +26,6 @@ public class GetTinkoffStockHandler implements QueryHandler<GetTinkoffStockResul
     public GetTinkoffStockResult handle(GetTinkoffStock query) {
         String figi = query.getFigi();
         CompletableFuture<Instrument> cf = stockService.getMarketInstrumentByFigi(figi);
-//        CompletableFuture<Instrument> cf = stockService.getMarketInstrumentByTicker(figi);
 
         Optional<Instrument> optionalInstrument = Optional.ofNullable(cf.join());
         if (optionalInstrument.isEmpty()) throw ApiException.exception(HttpStatus.NOT_FOUND, "stock by figi:[%s] not found", figi);

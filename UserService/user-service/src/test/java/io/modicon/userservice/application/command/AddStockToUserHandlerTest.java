@@ -8,6 +8,7 @@ import io.modicon.userservice.application.service.TickerFigiConverterService;
 import io.modicon.userservice.command.AddStockToUser;
 import io.modicon.userservice.command.AddStockToUserResult;
 import io.modicon.userservice.domain.model.PositionEntity;
+import io.modicon.userservice.domain.model.StockEntity;
 import io.modicon.userservice.domain.model.UserEntity;
 import io.modicon.userservice.domain.repository.StockRepository;
 import io.modicon.userservice.domain.repository.UserRepository;
@@ -60,6 +61,10 @@ class AddStockToUserHandlerTest {
     private PositionDto positionToAdd4 = new PositionDto("figi7", 7, "name7");
     private Set<PositionEntity> validPositionsToAdd;
     private Set<PositionEntity> invalidPositionsToAdd;
+    private StockEntity stockInDb1 = new StockEntity(UUID.randomUUID(), "ticker4", "figi4", null, "name4", null);
+    private StockEntity stockInDb2 = new StockEntity(UUID.randomUUID(), "ticker5", "figi5", null, "name5", null);
+    private StockEntity stockInDb3 = new StockEntity(UUID.randomUUID(), "ticker6", "figi6", null, "name6", null);
+    private StockEntity stockInDb4 = new StockEntity(UUID.randomUUID(), "ticker7", "figi7", null, "name7", null);
 
     private List<StockDto> stockDtos = new ArrayList<>();
     private StockDto stockDto1 = new StockDto("figi4", "figi4", "name4", "share", CurrencyDto.EUR, "TINKOFF");
@@ -128,7 +133,10 @@ class AddStockToUserHandlerTest {
     @Test
     void should_returnCorrectData_whenAllExistInDb() {
         when(userRepository.findById(anyString())).thenReturn(Optional.of(user));
-        when(stockRepository.existsByFigi(anyString())).thenReturn(true);
+        when(stockRepository.findByFigi(positionToAdd1.figi())).thenReturn(Optional.of(stockInDb1));
+        when(stockRepository.findByFigi(positionToAdd2.figi())).thenReturn(Optional.of(stockInDb2));
+        when(stockRepository.findByFigi(positionToAdd3.figi())).thenReturn(Optional.of(stockInDb3));
+        when(stockRepository.findByFigi(positionToAdd4.figi())).thenReturn(Optional.of(stockInDb4));
         when(tickerFigiConverterService.getFigisFromTickers(validPositionsToAdd)).thenReturn(new ArrayList<>(validPositionsToAdd));
 
         AddStockToUserResult result = addStockToUserHandler.handle(new AddStockToUser(user.getId(), validPositionsDtoToAdd));
@@ -142,7 +150,6 @@ class AddStockToUserHandlerTest {
     @Test
     void should_returnCorrectData_whenStocksNotFound() {
         when(userRepository.findById(anyString())).thenReturn(Optional.of(user));
-        when(stockRepository.existsByFigi(anyString())).thenReturn(false);
         when(tickerFigiConverterService.getFigisFromTickers(validPositionsToAdd)).thenReturn(new ArrayList<>(validPositionsToAdd));
         HashSet<String> notFoundFigis = new HashSet<>();
         String notFoundFigi = "figi4";

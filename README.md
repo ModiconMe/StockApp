@@ -43,4 +43,6 @@ TICKER1 QUANTITY1 FIGI2 QUANTITY2. Пример: SBER 20 GAZP 31 RU000A0JS6M0 16
 * /currency - выводит курс валют на текущую дату.
 * /currency 30.01.2022 - выводит курс валют на указанную дату.
 * /findstock - поиск актива по его Ticker.
-![ex1.png](ex1.png)![ex2.png](ex2.png)
+
+![ex1.png](ex1.png)
+![ex2.png](ex2.png)
